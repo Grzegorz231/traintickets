@@ -1,0 +1,31 @@
+﻿<Window x:Class="RailwayTickets.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RailwayTickets"
+        mc:Ignorable="d"
+        Title="Регистрация" Height="280" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closed="Window_Closed">
+    <Grid Height="264" VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="txtBoxRegPassportSerie" Margin="78,0,0,185" TextWrapping="Wrap" MaxLength="4" MaxLines="1" Height="18" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="lblPassSerie" Content="Серия:" Margin="27,0,0,181" VerticalAlignment="Bottom" Height="26" HorizontalAlignment="Left" Width="46"/>
+        <TextBox x:Name="txtBoxRegPassportNum" Margin="78,0,0,151" TextWrapping="Wrap" VerticalAlignment="Bottom" MaxLength="6" MaxLines="1" Height="18" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="lblPassNum" Content="Номер:" Margin="23,0,0,147" VerticalAlignment="Bottom" Height="26" HorizontalAlignment="Left" Width="50"/>
+        <Label x:Name="lblPassData" Content="Паспортные данные" Margin="78,0,0,213" VerticalAlignment="Bottom" Height="26" HorizontalAlignment="Left" Width="122"/>
+        <TextBox x:Name="txtBoxRegPassportName" Margin="78,0,0,117" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="18" MaxLength="50" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="lblPassName" Content="Имя:" Margin="37,0,0,113" VerticalAlignment="Bottom" Height="26" HorizontalAlignment="Left" Width="36"/>
+        <TextBox x:Name="txtBoxRegPassportLastName" Margin="78,0,0,83" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="18" MaxLength="50" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="lblPassLastName" Content="Фамилия:" Margin="11,0,0,79" VerticalAlignment="Bottom" Height="26" HorizontalAlignment="Left" Width="62"/>
+        <TextBox x:Name="txtBoxRegPassportPatronymic" Margin="78,0,0,49" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="18" MaxLength="50" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="lblPassPatronymic" Content="Отчество:" Margin="10,0,0,45" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="63"/>
+        <CheckBox x:Name="ChckBoxNoPatronymic" Content="Нет отчества" Margin="203,0,0,50" VerticalAlignment="Bottom" Checked="ChckBoxNoPatronymic_Checked" HorizontalAlignment="Left" Width="91" Unchecked="ChckBoxNoPatronymic_Unchecked"/>
+        <Button x:Name="btnRegAccept" Content="Принять" HorizontalAlignment="Right" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" Click="btnRegAccept_Click"/>
+        <Button x:Name="btnRegCancel" Content="Отмена" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btnRegCancel_Click"/>
+    </Grid>
+</Window>
