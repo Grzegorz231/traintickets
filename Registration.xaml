@@ -26,6 +26,6 @@
         <Label x:Name="lblPassPatronymic" Content="Отчество:" Margin="10,0,0,45" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="63"/>
         <CheckBox x:Name="ChckBoxNoPatronymic" Content="Нет отчества" Margin="203,0,0,50" VerticalAlignment="Bottom" Checked="ChckBoxNoPatronymic_Checked" HorizontalAlignment="Left" Width="91" Unchecked="ChckBoxNoPatronymic_Unchecked"/>
         <Button x:Name="btnRegAccept" Content="Принять" HorizontalAlignment="Right" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" Click="btnRegAccept_Click"/>
-        <Button x:Name="btnRegCancel" Content="Отмена" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btnRegCancel_Click"/>
+        <Button x:Name="btnRegCancel" Content="Завершить работу" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btnRegCancel_Click"/>
     </Grid>
 </Window>
