@@ -1,7 +1,36 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\registration.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:registration.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\sysadminenter.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:sysadminenter.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\sysadminenter.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:sysadminenter.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\databasemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:databasemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +38,99 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SysAdminEnter.xaml.cs",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\SysAdminEnter.xaml.cs",
+              "RelativeDocumentMoniker": "SysAdminEnter.xaml.cs",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\SysAdminEnter.xaml.cs*",
+              "RelativeToolTip": "SysAdminEnter.xaml.cs*",
+              "ViewState": "AQIAABkAAAAAAAAAAAAzwDEAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T07:35:36.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SysAdminEnter.xaml",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\SysAdminEnter.xaml",
+              "RelativeDocumentMoniker": "SysAdminEnter.xaml",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\SysAdminEnter.xaml",
+              "RelativeToolTip": "SysAdminEnter.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-12T07:35:18.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Registration.xaml",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml",
+              "RelativeDocumentMoniker": "Registration.xaml",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml",
+              "RelativeToolTip": "Registration.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-12T07:35:17.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Registration.xaml.cs",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml.cs",
+              "RelativeDocumentMoniker": "Registration.xaml.cs",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml.cs",
+              "RelativeToolTip": "Registration.xaml.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAcwDQAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T14:37:36.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-12T07:34:56.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABUAAABvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T14:03:12.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DatabaseManager.cs",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\DatabaseManager.cs",
+              "RelativeDocumentMoniker": "DatabaseManager.cs",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\DatabaseManager.cs",
+              "RelativeToolTip": "DatabaseManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T07:35:12.299Z",
+              "EditorCaption": ""
             }
           ]
         }
