@@ -23,8 +23,7 @@ namespace RailwayTickets
 
         private void btnSysAdmOK_Click(object sender, RoutedEventArgs e)
         {
-            int aboba;
-            aboba= 0;
+
         }
 
         private void btnSysAdmCancel_Click(object sender, RoutedEventArgs e)
