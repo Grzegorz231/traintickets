@@ -121,7 +121,7 @@ namespace RailwayTickets
                         commandToAddEmployee.ExecuteNonQuery();
                         MessageBox.Show("Пользователь успешно добавлен!");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         MessageBox.Show("Пользователь с данными паспортными данными уже существует!");
                     }
