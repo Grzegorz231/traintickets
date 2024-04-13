@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\ямакака\KURSA4 PROGA\RailwayTickets\obj\Debug\
+D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\
 RailwayTickets
 none
 false
 DEBUG;TRACE
-D:\ямакака\KURSA4 PROGA\RailwayTickets\App.xaml
-3-751487640
+D:\ямакака\KURSA4 PROGA\repository\traintickets\App.xaml
+4-2135163880
 
-92062127854
-311026379256
-MainWindow.xaml;Registration.xaml;SysAdminEnter.xaml;
+10-1759088990
+3159349684
+MainTickets.xaml;MainWindow.xaml;Registration.xaml;SysAdminEnter.xaml;
 
 True
 

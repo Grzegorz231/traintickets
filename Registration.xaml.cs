@@ -1,7 +1,6 @@
 ﻿using Npgsql;
 using System;
 using System.Windows;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
