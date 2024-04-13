@@ -31,12 +31,10 @@ namespace RailwayTickets
                 dbPassword = reader["employee_password"].ToString();
 
                 if (login == dbLogin && password == dbPassword)
-                {
-                    this.Close();
+                {         
                     MainTickets mainTickets = new MainTickets();
-                    registration.Owner = this.Owner;
-                    this.Owner.IsEnabled = false;
-                    registration.Show();
+                    mainTickets.Show();
+                    this.Close();
                 }
                 else
                 {

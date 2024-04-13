@@ -102,3 +102,5 @@ D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\RailwayTickets.
 D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\RailwayT.11C96691.Up2Date
 D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\RailwayTickets.exe
 D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\RailwayTickets.pdb
+D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\MainTickets.g.cs
+D:\ямакака\KURSA4 PROGA\repository\traintickets\obj\Debug\MainTickets.baml

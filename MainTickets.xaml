@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RailwayTickets"
         mc:Ignorable="d"
-        Title="MainTickets" Height="450" Width="800">
+        Title="Билеты" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized" MinWidth="800" MinHeight="450" ResizeMode="NoResize">
     <Grid>
-        
+        <Menu Height="23" VerticalAlignment="Top">
+            <MenuItem Header="Файл" Height="21" Width="60"/>
+            <MenuItem Header="Вид" Width="35"/>
+        </Menu>
+        <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Плацкарт"/>
+            <ComboBoxItem Content="Купе"/>
+        </ComboBox>
+        <Label x:Name="lblPassengerData" Content="Данные пассажира" HorizontalAlignment="Left" Margin="243,38,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassengerName" Content="Имя:" HorizontalAlignment="Left" Margin="200,91,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassengerLastName" Content="Фамилия:" HorizontalAlignment="Left" Margin="174,122,0,0" VerticalAlignment="Top"/>
+        <Label Content="Отчество:" HorizontalAlignment="Left" Margin="173,153,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassSerie" Content="Серия паспорта: " HorizontalAlignment="Left" Margin="133,215,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" HorizontalAlignment="Left" Margin="370,159,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassNum" Content="Номер паспорта:" HorizontalAlignment="Left" Margin="129,246,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassengerSex" Content="Пол:" HorizontalAlignment="Left" Margin="198,184,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxPassengerSex" HorizontalAlignment="Left" Margin="241,186,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Мужской"/>
+            <ComboBoxItem Content="Женский"/>
+        </ComboBox>
+        <TextBox x:Name="txtBoxName" HorizontalAlignment="Left" Margin="241,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtBoxLastName" HorizontalAlignment="Left" Margin="241,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtBoxPatronymic" HorizontalAlignment="Left" Margin="241,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtBoxPassSerie" HorizontalAlignment="Left" Margin="241,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="4"/>
+        <TextBox x:Name="txtBoxPassNum" HorizontalAlignment="Left" Margin="241,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="6"/>
     </Grid>
 </Window>
