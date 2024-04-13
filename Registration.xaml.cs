@@ -3,6 +3,8 @@ using System;
 using System.Windows;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 
 namespace RailwayTickets
@@ -35,8 +37,10 @@ namespace RailwayTickets
 
         private void btnRegAccept_Click(object sender, RoutedEventArgs e)
         {
-            databaseManager.OpenConnection();
-            NpgsqlCommand commandToAddEmployee = new NpgsqlCommand(@"INSERT INTO public.employee (
+            try
+            {
+                databaseManager.OpenConnection();
+                NpgsqlCommand commandToAddEmployee = new NpgsqlCommand(@"INSERT INTO public.employee (
                                                                         employee_id, 
                                                                         employee_passport, 
                                                                         employee_first_name, 
@@ -56,22 +60,51 @@ namespace RailwayTickets
                                                                         nextval('employee_login_id_sec') || '_' || @surname || '-' || @first_letter_name || '-' || @first_letter_patronymic, 
                                                                         @surname || '-' || @first_letter_name || '-' || @first_letter_patronymic
                                                                     ", databaseManager.connection);
-            int passSerie, passNumber;
+                string transliteratedFirstName, transliteratedLastName;
+                char firstLetterPatronymic, firstLetterName;
+                string passSerie = txtBoxRegPassportSerie.Text;
+                string passNumber = txtBoxRegPassportNum.Text;
+                string firstName = txtBoxRegPassportName.Text;
+                string lastName = txtBoxRegPassportLastName.Text;
+                string patronymic = txtBoxRegPassportPatronymic.Text;
 
-            string firstName = txtBoxRegPassportName.Text;
-            string lastName = txtBoxRegPassportLastName.Text;
-            string patronymic = txtBoxRegPassportPatronymic.Text;
-            string transliteratedLastName = Transliterate(lastName);
-            string transliteratedFirstName = Transliterate(firstName);
-            string transliteratedPatronymic = Transliterate(patronymic);
+                if (string.IsNullOrEmpty(passSerie))
+                {
+                    throw new Exception("Поле с серией паспорта не может быть пустым!");
+                }
 
-            
-            try
-            {
-                char firstLetterName = transliteratedFirstName[0];
-                char firstLetterPatronymic = transliteratedPatronymic[0];
-                int.TryParse(txtBoxRegPassportSerie.Text, out passSerie);
-                int.TryParse(txtBoxRegPassportNum.Text, out passNumber);
+                if (passSerie.Length < 4)
+                {
+                    throw new Exception("Серия паспорта не может иметь меньше четырёх цифр!");
+                }
+
+                if (string.IsNullOrEmpty(passNumber))
+                {
+                    throw new Exception("Поле с номером не может быть пустым!");
+                }
+
+                if (passNumber.Length < 6)
+                {
+                    throw new Exception("Номер паспорта не может иметь меньше шести цифр!");
+                }
+
+                if (string.IsNullOrEmpty(firstName))
+                {
+                    throw new Exception("Поле с именем не может быть пустым!");
+                }
+
+                if (string.IsNullOrEmpty(lastName))
+                {
+                    throw new Exception("Поле с фамилией не может быть пустым!");
+                }
+                
+
+                transliteratedFirstName = Transliterate(firstName);
+                firstLetterName = transliteratedFirstName[0];
+
+                transliteratedLastName = Transliterate(lastName);
+                firstLetterPatronymic = patronymic.Length > 0 ? Transliterate(patronymic)[0] : 'n';
+
                 commandToAddEmployee.Parameters.AddWithValue("@passport_serie", passSerie);
                 commandToAddEmployee.Parameters.AddWithValue("@passport_number", passNumber);
                 commandToAddEmployee.Parameters.AddWithValue("@surname", transliteratedLastName);
@@ -80,27 +113,39 @@ namespace RailwayTickets
                 commandToAddEmployee.Parameters.AddWithValue("@employee_name", firstName);
                 commandToAddEmployee.Parameters.AddWithValue("@employeeSurname", lastName);
                 commandToAddEmployee.Parameters.AddWithValue("@employeePatronymic", patronymic);
-            }
-            catch
-            {
-                MessageBox.Show("В поля с серией или номером паспорта введено не число или поля пустые!");
-            }
 
-            try
-            {
-                commandToAddEmployee.ExecuteNonQuery();
-                MessageBox.Show("Пользователь успешно добавлен!");
+                if (txtBoxRegPassportSerie.Text.Length > 0 && txtBoxRegPassportNum.Text.Length > 0 && txtBoxRegPassportName.Text.Length > 0 && txtBoxRegPassportLastName.Text.Length > 0)
+                {
+                    try
+                    {
+                        commandToAddEmployee.ExecuteNonQuery();
+                        MessageBox.Show("Пользователь успешно добавлен!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Пользователь с данными паспортными данными уже существует!");
+                    }
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show("Пользователь с данными паспортными данными уже существует!");
+                MessageBox.Show(ex.Message);
             }
-            databaseManager.CloseConnection();
+            finally
+            {
+                databaseManager.CloseConnection();
+            }
+            
         }
 
         private void btnRegCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        public void TxtBoxIsNumber(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -140,5 +185,9 @@ namespace RailwayTickets
             return transliteratedText;
         }
 
+        private void Txt(object sender, TextCompositionEventArgs e)
+        {
+
+        }
     }
 }
