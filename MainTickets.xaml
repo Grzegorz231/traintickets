@@ -36,6 +36,15 @@
                     <TextBox x:Name="txtBoxPassNum" HorizontalAlignment="Left" Margin="223,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="6"/>
                     <Label x:Name="lblPassNum" Content="Номер паспорта:" HorizontalAlignment="Left" Margin="113,199,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" HorizontalAlignment="Left" Margin="347,124,0,0" VerticalAlignment="Top" Checked="checkBoxNoPatronymic_Checked" Unchecked="checkBoxNoPatronymic_Unchecked"/>
+                    <Label x:Name="lblStationFrom" Content="Станция отправления:" HorizontalAlignment="Left" Margin="525,31,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblStationTo" Content="Станция назначения:" HorizontalAlignment="Left" Margin="532,62,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" Margin="676,33,0,0" VerticalAlignment="Top" Width="120" TextSearch.TextPath="Name">
+                        <ComboBoxItem Content="Пермь-2"/>
+                        <ComboBoxItem Content="Пермь-1"/>
+                        <ComboBoxItem Content="Чусовой"/>
+                        <ComboBoxItem Content="Калино"/>
+                    </ComboBox>
+                    <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" Margin="676,64,0,0" VerticalAlignment="Top" Width="120"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Пригородные поезда">
