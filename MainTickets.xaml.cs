@@ -63,6 +63,7 @@ namespace RailwayTickets
 
             if (isEditingMode)
             {
+                lblIsEditMode.Content = "Включен режим редактирования!";
                 // Включаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
@@ -73,6 +74,7 @@ namespace RailwayTickets
             }
             else
             {
+                lblIsEditMode.Content = "Не в режиме редактирования";
                 // Отключаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
@@ -99,13 +101,18 @@ namespace RailwayTickets
         {
             if (isEditingMode && isDragging)
             {
-                Point newPoint = e.GetPosition(null);
-                Vector offset = startPoint - newPoint;
+                Point newPoint = e.GetPosition(gridFarAway); // Получаем позицию относительно контейнера
+                UIElement element = sender as UIElement;
 
-                ((UIElement)sender).SetValue(Canvas.LeftProperty, offset.X);
-                ((UIElement)sender).SetValue(Canvas.TopProperty, offset.Y);
+                // Рассчитываем новую позицию элемента
+                double left = newPoint.X - startPoint.X + (double)element.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)element.GetValue(Canvas.TopProperty);
 
-                startPoint = newPoint;
+                // Устанавливаем новое положение элемента
+                element.SetValue(Canvas.LeftProperty, left);
+                element.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint; // Обновляем стартовую позицию
             }
         }
 

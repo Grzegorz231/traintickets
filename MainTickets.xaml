@@ -19,46 +19,47 @@
         </Menu>
         <TabControl Margin="0,23,0,-23">
             <TabItem Header="Поезда дальнего следования">
-                <Grid x:Name="gridFarAway" Background="White">
-                    <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="120">
+                <Canvas x:Name="gridFarAway" Background="White">
+                    <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="10"/>
+                    <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Canvas.Left="10" Canvas.Top="41">
                         <ComboBoxItem Content="Плацкарт"/>
                         <ComboBoxItem Content="Купе"/>
                     </ComboBox>
-                    <Label x:Name="lblPassengerData" Content="Данные пассажира" HorizontalAlignment="Left" Margin="221,18,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxName" HorizontalAlignment="Left" Margin="222,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblPassengerName" Content="Имя:" HorizontalAlignment="Left" Margin="181,62,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxLastName" HorizontalAlignment="Left" Margin="222,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblPassengerLastName" Content="Фамилия:" HorizontalAlignment="Left" Margin="155,88,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxPatronymic" HorizontalAlignment="Left" Margin="222,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblPassengerPatronymic" Content="Отчество:" HorizontalAlignment="Left" Margin="154,119,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="comboBoxPassengerSex" HorizontalAlignment="Left" Margin="223,147,0,0" VerticalAlignment="Top" Width="120">
+                    <Label x:Name="lblPassengerData" Content="Данные пассажира" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="222" Canvas.Top="18"/>
+                    <TextBox x:Name="txtBoxName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Canvas.Left="223" Canvas.Top="66"/>
+                    <Label x:Name="lblPassengerName" Content="Имя:" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="182" Canvas.Top="62"/>
+                    <TextBox x:Name="txtBoxLastName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Canvas.Left="223" Canvas.Top="92"/>
+                    <Label x:Name="lblPassengerLastName" Content="Фамилия:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="156" Canvas.Top="88"/>
+                    <TextBox x:Name="txtBoxPatronymic" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Canvas.Left="223" Canvas.Top="123"/>
+                    <Label x:Name="lblPassengerPatronymic" Content="Отчество:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="155" Canvas.Top="119"/>
+                    <ComboBox x:Name="comboBoxPassengerSex" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Canvas.Left="223" Canvas.Top="147">
                         <ComboBoxItem Content="Мужской"/>
                         <ComboBoxItem Content="Женский"/>
                     </ComboBox>
-                    <Label x:Name="lblPassengerSex" Content="Пол:" HorizontalAlignment="Left" Margin="183,147,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxPassSerie" HorizontalAlignment="Left" Margin="223,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="4"/>
-                    <Label x:Name="lblPassSerie" Content="Серия паспорта: " HorizontalAlignment="Left" Margin="114,173,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxPassNum" HorizontalAlignment="Left" Margin="223,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="6"/>
-                    <Label x:Name="lblPassNum" Content="Номер паспорта:" HorizontalAlignment="Left" Margin="113,199,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" HorizontalAlignment="Left" Margin="347,124,0,0" VerticalAlignment="Top" Checked="checkBoxNoPatronymic_Checked" Unchecked="checkBoxNoPatronymic_Unchecked"/>
-                    <Label x:Name="lblStationFrom" Content="Станция отправления:" HorizontalAlignment="Left" Margin="525,31,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lblStationTo" Content="Станция назначения:" HorizontalAlignment="Left" Margin="532,62,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" Margin="676,33,0,0" VerticalAlignment="Top" Width="120" TextSearch.TextPath="Name">
+                    <Label x:Name="lblPassengerSex" Content="Пол:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="183" Canvas.Top="147"/>
+                    <TextBox x:Name="txtBoxPassSerie" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" MaxLength="4" Canvas.Left="224" Canvas.Top="177"/>
+                    <Label x:Name="lblPassSerie" Content="Серия паспорта: " HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="115" Canvas.Top="173"/>
+                    <TextBox x:Name="txtBoxPassNum" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="6" Canvas.Left="224" Canvas.Top="203"/>
+                    <Label x:Name="lblPassNum" Content="Номер паспорта:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="114" Canvas.Top="199"/>
+                    <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxNoPatronymic_Checked" Unchecked="checkBoxNoPatronymic_Unchecked" Canvas.Left="348" Canvas.Top="124"/>
+                    <Label x:Name="lblStationFrom" Content="Станция отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="525" Canvas.Top="31"/>
+                    <Label x:Name="lblStationTo" Content="Станция назначения:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="532" Canvas.Top="62"/>
+                    <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" TextSearch.TextPath="Name" Canvas.Left="676" Canvas.Top="33">
                         <ComboBoxItem Content="Пермь-2"/>
                         <ComboBoxItem Content="Пермь-1"/>
                         <ComboBoxItem Content="Чусовой"/>
                         <ComboBoxItem Content="Калино"/>
                     </ComboBox>
-                    <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" Margin="676,64,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblDateFrom" Content="Дата отправления:" HorizontalAlignment="Left" Margin="545,92,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBoxDateFrom" HorizontalAlignment="Left" Margin="676,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblNumPlace" Content="Номер места:" HorizontalAlignment="Left" Margin="573,119,0,0" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="676,121,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="lblFullPrice" Content="Льготы:" HorizontalAlignment="Left" Margin="601,147,0,0" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="676,149,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" Margin="1861,1006,0,0" VerticalAlignment="Top"/>
-                </Grid>
+                    <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Canvas.Left="676" Canvas.Top="64"/>
+                    <Label x:Name="lblDateFrom" Content="Дата отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="545" Canvas.Top="92"/>
+                    <TextBox x:Name="txtBoxDateFrom" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Canvas.Left="676" Canvas.Top="96"/>
+                    <Label x:Name="lblNumPlace" Content="Номер места:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="573" Canvas.Top="119"/>
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Canvas.Left="676" Canvas.Top="121"/>
+                    <Label x:Name="lblFullPrice" Content="Льготы:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="601" Canvas.Top="147"/>
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Canvas.Left="676" Canvas.Top="149"/>
+                    <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="1861" Canvas.Top="777"/>
+                    <Label x:Name="lblIsEditMode" Content="Не в режиме редактирования" Canvas.Left="45" Canvas.Top="723" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
             </TabItem>
             <TabItem Header="Пригородные поезда">
                 <Grid Background="White"/>
