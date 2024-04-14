@@ -45,6 +45,13 @@
                         <ComboBoxItem Content="Калино"/>
                     </ComboBox>
                     <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" Margin="676,64,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="lblDateFrom" Content="Дата отправления:" HorizontalAlignment="Left" Margin="545,92,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtBoxDateFrom" HorizontalAlignment="Left" Margin="676,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="lblNumPlace" Content="Номер места:" HorizontalAlignment="Left" Margin="573,119,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="676,121,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="lblFullPrice" Content="Льготы:" HorizontalAlignment="Left" Margin="601,147,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="676,149,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" Margin="1861,1006,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Пригородные поезда">
