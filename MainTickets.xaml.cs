@@ -19,9 +19,26 @@ namespace RailwayTickets
     /// </summary>
     public partial class MainTickets : Window
     {
+        static string patronymicStatic = "";
         public MainTickets()
         {
             InitializeComponent();
+        }
+
+        private void checkBoxNoPatronymic_Checked(object sender, RoutedEventArgs e)
+        {
+            patronymicStatic = txtBoxPatronymic.Text;
+            txtBoxPatronymic.Text = "";
+            lblPassengerPatronymic.IsEnabled = false;
+            txtBoxPatronymic.IsEnabled=false;
+        }
+
+        private void checkBoxNoPatronymic_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtBoxPatronymic.Text = patronymicStatic;
+            patronymicStatic = "";
+            lblPassengerPatronymic.IsEnabled = true;
+            txtBoxPatronymic.IsEnabled = true;
         }
     }
 }

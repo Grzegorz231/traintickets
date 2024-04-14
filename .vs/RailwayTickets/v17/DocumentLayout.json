@@ -7,16 +7,20 @@
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:maintickets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,6 +39,31 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Registration.xaml.cs",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml.cs",
+              "RelativeDocumentMoniker": "Registration.xaml.cs",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\Registration.xaml.cs",
+              "RelativeToolTip": "Registration.xaml.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-14T12:28:04.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-13T13:19:30.982Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -52,24 +81,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-13T13:19:30.982Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "MainTickets.xaml.cs",
               "DocumentMoniker": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainTickets.xaml.cs",
               "RelativeDocumentMoniker": "MainTickets.xaml.cs",
               "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainTickets.xaml.cs",
               "RelativeToolTip": "MainTickets.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAADwvx0AAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-13T13:19:27.144Z",
               "EditorCaption": ""
