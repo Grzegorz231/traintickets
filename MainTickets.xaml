@@ -8,12 +8,18 @@
         Title="Билеты" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized" MinWidth="800" MinHeight="450">
     <Grid>
         <Menu Height="23" VerticalAlignment="Top" Background="White">
-            <MenuItem Header="Файл" Height="21" Width="60"/>
-            <MenuItem Header="Вид" Width="35"/>
+            <MenuItem x:Name="menuItemFile" Header="Файл" Height="21" Width="60">
+                <MenuItem x:Name="menuItemSave" Header="Сохранить..." Click="menuItemSave_Click"/>
+                <MenuItem x:Name="menuItemLoad" Header="Загрузить..." Click="menuItemLoad_Click"/>
+                <MenuItem x:Name="menuItemExit" Header="Выход" Click="menuItemExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Вид" Width="35">
+                <MenuItem x:Name="menuItemEdit" Header="Редактировать" Click="menuItemEdit_Click"/>
+            </MenuItem>
         </Menu>
         <TabControl Margin="0,23,0,-23">
             <TabItem Header="Поезда дальнего следования">
-                <Grid Background="White">
+                <Grid x:Name="gridFarAway" Background="White">
                     <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="120">
                         <ComboBoxItem Content="Плацкарт"/>
