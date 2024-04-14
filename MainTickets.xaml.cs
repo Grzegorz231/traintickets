@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RailwayTickets
 {
@@ -73,8 +61,12 @@ namespace RailwayTickets
                     if (element is TextBox)
                     {
                         ((TextBox)element).IsReadOnly = true;
-                        ((TextBox)element).Cursor = Cursors.Arrow;
+                        ((TextBox)element).Cursor = Cursors.Hand;
                         EnableTextBoxDragging((TextBox)element);
+                    }
+                    if (element is ComboBox)
+                    {
+                        EnableComboBoxDragging((ComboBox)element);
                     }
                     element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
                     element.MouseMove += Element_MouseMove;
@@ -92,6 +84,10 @@ namespace RailwayTickets
                         ((TextBox)element).IsReadOnly = false;
                         ((TextBox)element).Cursor = Cursors.IBeam;
                         DisableTextBoxDragging((TextBox)element);
+                    }
+                    if (element is ComboBox)
+                    {
+                        DisableComboBoxDragging((ComboBox)element);
                     }
                     element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
                     element.MouseMove -= Element_MouseMove;
@@ -152,7 +148,7 @@ namespace RailwayTickets
 
         private TextBox selectedTextBox;
 
-        private void TextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void TextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //вызывается при нажатии мыши, чтобы "взять" textbox
         {
             if (isEditingMode)
             {
@@ -160,11 +156,11 @@ namespace RailwayTickets
                 startPoint = e.GetPosition(null);
                 selectedTextBox = sender as TextBox;
                 selectedTextBox.CaptureMouse();
-                e.Handled = true; // Предотвращаем начало выделения текста в TextBox
+                e.Handled = true;
             }
         }
 
-        private void TextBox_MouseMove(object sender, MouseEventArgs e)
+        private void TextBox_MouseMove(object sender, MouseEventArgs e) //вызывается при перемещении мыши, когда "взят" textbox
         {
             if (isEditingMode && isDragging && selectedTextBox != null)
             {
@@ -179,7 +175,7 @@ namespace RailwayTickets
             }
         }
 
-        private void TextBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void TextBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) //вызывается при поднятии мыши и устанавливает конечное положение textbox'a
         {
             if (isEditingMode && isDragging && selectedTextBox != null)
             {
@@ -188,5 +184,60 @@ namespace RailwayTickets
                 selectedTextBox = null;
             }
         }
+
+        private void EnableComboBoxDragging(ComboBox comboBox)
+        {
+            comboBox.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            comboBox.PreviewMouseLeftButtonDown += ComboBox_MouseLeftButtonDown;
+            comboBox.PreviewMouseMove += ComboBox_MouseMove;
+            comboBox.PreviewMouseLeftButtonUp += ComboBox_MouseLeftButtonUp;
+        }
+
+        private void DisableComboBoxDragging(ComboBox comboBox)
+        {
+            comboBox.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            comboBox.PreviewMouseLeftButtonDown -= ComboBox_MouseLeftButtonDown;
+            comboBox.PreviewMouseMove -= ComboBox_MouseMove;
+            comboBox.PreviewMouseLeftButtonUp -= ComboBox_MouseLeftButtonUp;
+        }
+        private ComboBox selectedComboBox;
+
+        private void ComboBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode)
+            {
+                isDragging = true;
+                startPoint = e.GetPosition(null);
+                selectedComboBox = sender as ComboBox;
+                selectedComboBox.CaptureMouse();
+                e.Handled = true; // Предотвращаем начало выбора элемента в ComboBox
+            }
+        }
+
+        private void ComboBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedComboBox != null)
+            {
+                Point newPoint = e.GetPosition(gridFarAway);
+                double left = newPoint.X - startPoint.X + (double)selectedComboBox.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)selectedComboBox.GetValue(Canvas.TopProperty);
+
+                selectedComboBox.SetValue(Canvas.LeftProperty, left);
+                selectedComboBox.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+            }
+        }
+
+        private void ComboBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedComboBox != null)
+            {
+                isDragging = false;
+                selectedComboBox.ReleaseMouseCapture();
+                selectedComboBox = null;
+            }
+        }
+
     }
 }
