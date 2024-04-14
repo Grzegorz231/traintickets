@@ -57,6 +57,9 @@ namespace RailwayTickets
 
         }
 
+        private bool isDragging = false;
+        private Point startPoint;
+
         private void menuItemEdit_Click(object sender, RoutedEventArgs e)
         {
             isEditingMode = !isEditingMode;
@@ -67,6 +70,12 @@ namespace RailwayTickets
                 // Включаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
+                    if (element is TextBox)
+                    {
+                        ((TextBox)element).IsReadOnly = true;
+                        ((TextBox)element).Cursor = Cursors.Arrow;
+                        EnableTextBoxDragging((TextBox)element);
+                    }
                     element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
                     element.MouseMove += Element_MouseMove;
                     element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
@@ -78,14 +87,18 @@ namespace RailwayTickets
                 // Отключаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
+                    if (element is TextBox)
+                    {
+                        ((TextBox)element).IsReadOnly = false;
+                        ((TextBox)element).Cursor = Cursors.IBeam;
+                        DisableTextBoxDragging((TextBox)element);
+                    }
                     element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
                     element.MouseMove -= Element_MouseMove;
                     element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
                 }
             }
         }
-        private bool isDragging = false;
-        private Point startPoint;
 
         private void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -101,18 +114,16 @@ namespace RailwayTickets
         {
             if (isEditingMode && isDragging)
             {
-                Point newPoint = e.GetPosition(gridFarAway); // Получаем позицию относительно контейнера
+                Point newPoint = e.GetPosition(gridFarAway);
                 UIElement element = sender as UIElement;
 
-                // Рассчитываем новую позицию элемента
                 double left = newPoint.X - startPoint.X + (double)element.GetValue(Canvas.LeftProperty);
                 double top = newPoint.Y - startPoint.Y + (double)element.GetValue(Canvas.TopProperty);
 
-                // Устанавливаем новое положение элемента
                 element.SetValue(Canvas.LeftProperty, left);
                 element.SetValue(Canvas.TopProperty, top);
 
-                startPoint = newPoint; // Обновляем стартовую позицию
+                startPoint = newPoint;
             }
         }
 
@@ -122,6 +133,59 @@ namespace RailwayTickets
             {
                 isDragging = false;
                 ((UIElement)sender).ReleaseMouseCapture();
+            }
+        }
+
+        private void EnableTextBoxDragging(TextBox textBox)
+        {
+            textBox.PreviewMouseLeftButtonDown += TextBox_MouseLeftButtonDown;
+            textBox.PreviewMouseMove += TextBox_MouseMove;
+            textBox.PreviewMouseLeftButtonUp += TextBox_MouseLeftButtonUp;
+        }
+
+        private void DisableTextBoxDragging(TextBox textBox)
+        {
+            textBox.PreviewMouseLeftButtonDown -= TextBox_MouseLeftButtonDown;
+            textBox.PreviewMouseMove -= TextBox_MouseMove;
+            textBox.PreviewMouseLeftButtonUp -= TextBox_MouseLeftButtonUp;
+        }
+
+        private TextBox selectedTextBox;
+
+        private void TextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode)
+            {
+                isDragging = true;
+                startPoint = e.GetPosition(null);
+                selectedTextBox = sender as TextBox;
+                selectedTextBox.CaptureMouse();
+                e.Handled = true; // Предотвращаем начало выделения текста в TextBox
+            }
+        }
+
+        private void TextBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedTextBox != null)
+            {
+                Point newPoint = e.GetPosition(gridFarAway);
+                double left = newPoint.X - startPoint.X + (double)selectedTextBox.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)selectedTextBox.GetValue(Canvas.TopProperty);
+
+                selectedTextBox.SetValue(Canvas.LeftProperty, left);
+                selectedTextBox.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+            }
+        }
+
+        private void TextBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedTextBox != null)
+            {
+                isDragging = false;
+                selectedTextBox.ReleaseMouseCapture();
+                selectedTextBox = null;
             }
         }
     }
