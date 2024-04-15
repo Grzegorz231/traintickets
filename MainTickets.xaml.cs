@@ -73,7 +73,7 @@ namespace RailwayTickets
                     double siblingRight = siblingLeft + sibling.RenderSize.Width;
                     double siblingBottom = siblingTop + sibling.RenderSize.Height;
 
-                    if (Math.Abs(elementLeft - siblingLeft) < 3)
+                    if (Math.Abs(elementLeft - siblingLeft) < 1)
                     {
                         Line verticalGuide = new Line();
                         verticalGuide.Stroke = Brushes.Red;
@@ -84,7 +84,7 @@ namespace RailwayTickets
                         newElements.Add(verticalGuide);
                     }
 
-                    if (Math.Abs(elementTop - siblingTop) < 3)
+                    if (Math.Abs(elementTop - siblingTop) < 1)
                     {
                         Line horizontalGuide = new Line();
                         horizontalGuide.Stroke = Brushes.Red;
@@ -95,7 +95,7 @@ namespace RailwayTickets
                         newElements.Add(horizontalGuide);
                     }
 
-                    if (Math.Abs(elementRight - siblingRight) < 3)
+                    if (Math.Abs(elementRight - siblingRight) < 1)
                     {
                         Line verticalGuide = new Line();
                         verticalGuide.Stroke = Brushes.Red;
@@ -106,7 +106,7 @@ namespace RailwayTickets
                         newElements.Add(verticalGuide);
                     }
 
-                    if (Math.Abs(elementBottom - siblingBottom) < 3)
+                    if (Math.Abs(elementBottom - siblingBottom) < 1)
                     {
                         Line horizontalGuide = new Line();
                         horizontalGuide.Stroke = Brushes.Red;
@@ -180,7 +180,7 @@ namespace RailwayTickets
             else
             {
                 ClearAlignmentGuides();
-                lblIsEditMode.Content = "Не в режиме редактирования";
+                lblIsEditMode.Content = "";
                 foreach (UIElement element in gridFarAway.Children)
                 {
                     if (element is TextBox)
