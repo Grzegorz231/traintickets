@@ -93,7 +93,7 @@
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="902" Stretch="Fill" Canvas.Top="99" VerticalAlignment="Top" Width="484">
                             <Grid Height="48" Width="484">
                                 <Label x:Name="lblNumPlace" Content="Номер места:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
-                                <ComboBox x:Name="comboBoxNumPlace" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" FontSize="24" Margin="164,0,0,0"/>
+                                <ComboBox x:Name="comboBoxNumPlace" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" FontSize="24" Margin="164,0,0,0" DropDownOpened="comboBoxNumPlace_DropDownOpened"/>
                             </Grid>
                         </Viewbox>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="967" Stretch="Fill" Canvas.Top="152" VerticalAlignment="Top" Width="419">
@@ -102,7 +102,7 @@
                                 <ComboBox x:Name="comboBoxFullPrice" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" FontSize="24" Height="48" Margin="99,0,0,0"/>
                             </Grid>
                         </Viewbox>
-                        <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="1663" Canvas.Top="684" Height="113" Width="241" FontSize="72"/>
+                        <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="1663" Canvas.Top="684" Height="113" Width="241" FontSize="72" Click="btnPrint_Click"/>
                         <Label x:Name="lblIsEditMode" Content="" Canvas.Left="10" Canvas.Top="684" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Canvas>
                 </Viewbox>

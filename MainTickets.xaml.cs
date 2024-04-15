@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,7 +14,7 @@ namespace RailwayTickets
     {
         static string patronymicStatic = "";
         private bool isEditingMode = false;
-        private List<Line> guideLines = new List<Line>();
+        DatabaseManager databaseManager = new DatabaseManager("localhost", 5432, "trains", "postgres", "2514");
 
         public MainTickets()
         {
@@ -35,6 +37,40 @@ namespace RailwayTickets
             txtBoxPatronymic.IsEnabled = true;
         }
 
+        private void LoadDataIntoComboBox()
+        {
+            databaseManager.OpenConnection();
+            comboBoxNumPlace.Items.Clear();
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(@"SELECT place.place_number
+                                                            FROM place
+                                                            JOIN carriage ON carriage.carriage_id = place.carriage_id AND carriage.carriage_type = @carriageType
+                                                            WHERE place.place_id NOT IN (SELECT place_id FROM ticket)", databaseManager.connection);
+
+                command.Parameters.AddWithValue("@carriageType", comboBoxTrainType.Text);
+
+                command.ExecuteNonQuery();
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    comboBoxNumPlace.Items.Add(reader["place_number"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            databaseManager.CloseConnection();
+        }
+
+        private void comboBoxNumPlace_DropDownOpened(object sender, EventArgs e)
+        {
+            LoadDataIntoComboBox();
+        }
 
         private void menuItemLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -49,6 +85,89 @@ namespace RailwayTickets
         private void menuItemExit_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                databaseManager.OpenConnection();
+                NpgsqlCommand commandToAddEmployee = new NpgsqlCommand(@"INSERT INTO public.passenger (
+                                                                        passenger_id, 
+                                                                        passenger_passport, 
+                                                                        passenger_first_name, 
+                                                                        passenger_last_name, 
+                                                                        passenger_patronymic
+                                                                    ) 
+                                                                    SELECT 
+                                                                        nextval('passengers_id_sec'::regclass), 
+                                                                        @passport_serie || ' ' || @passport_number, 
+                                                                        @passengerName, 
+                                                                        @passengerSurname, 
+                                                                        @passengerPatronymic 
+                                                                    ", databaseManager.connection);
+                string passSerie = txtBoxPassSerie.Text;
+                string passNumber = txtBoxPassNum.Text;
+                string firstName = txtBoxName.Text;
+                string lastName = txtBoxLastName.Text;
+                string patronymic = txtBoxPatronymic.Text;
+
+                if (string.IsNullOrEmpty(passSerie))
+                {
+                    throw new Exception("Поле с серией паспорта не может быть пустым!");
+                }
+
+                if (passSerie.Length < 4)
+                {
+                    throw new Exception("Серия паспорта не может иметь меньше четырёх цифр!");
+                }
+
+                if (string.IsNullOrEmpty(passNumber))
+                {
+                    throw new Exception("Поле с номером не может быть пустым!");
+                }
+
+                if (passNumber.Length < 6)
+                {
+                    throw new Exception("Номер паспорта не может иметь меньше шести цифр!");
+                }
+
+                if (string.IsNullOrEmpty(firstName))
+                {
+                    throw new Exception("Поле с именем не может быть пустым!");
+                }
+
+                if (string.IsNullOrEmpty(lastName))
+                {
+                    throw new Exception("Поле с фамилией не может быть пустым!");
+                }
+
+                commandToAddEmployee.Parameters.AddWithValue("@passport_serie", passSerie);
+                commandToAddEmployee.Parameters.AddWithValue("@passport_number", passNumber);
+                commandToAddEmployee.Parameters.AddWithValue("@passengerName", firstName);
+                commandToAddEmployee.Parameters.AddWithValue("@passengerSurname", lastName);
+                commandToAddEmployee.Parameters.AddWithValue("@passengerPatronymic", patronymic);
+
+                if (txtBoxPassSerie.Text.Length > 0 && txtBoxPassNum.Text.Length > 0 && txtBoxName.Text.Length > 0 && txtBoxLastName.Text.Length > 0)
+                {
+                    try
+                    {
+                        commandToAddEmployee.ExecuteNonQuery();
+                        MessageBox.Show("Пользователь успешно добавлен!");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Пользователь с данными паспортными данными уже существует!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                databaseManager.CloseConnection();
+            }
         }
 
         private bool isDragging = false;
@@ -466,5 +585,6 @@ namespace RailwayTickets
             }
         }
 
+        
     }
 }
