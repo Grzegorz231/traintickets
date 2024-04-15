@@ -68,6 +68,19 @@ namespace RailwayTickets
                     {
                         EnableComboBoxDragging((ComboBox)element);
                     }
+                    if (element is CheckBox)
+                    {
+                        EnableCheckBoxDragging((CheckBox)element);
+                    }
+                    if (element is Button)
+                    {
+                        EnableButtonDragging((Button)element);
+                    }
+                    if (element is Viewbox)
+                    {
+                        ((Viewbox)element).Cursor = Cursors.Hand;
+                    }
+                    
                     element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
                     element.MouseMove += Element_MouseMove;
                     element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
@@ -88,6 +101,14 @@ namespace RailwayTickets
                     if (element is ComboBox)
                     {
                         DisableComboBoxDragging((ComboBox)element);
+                    }
+                    if (element is CheckBox)
+                    {
+                        DisableCheckBoxDragging((CheckBox)element);
+                    }
+                    if (element is Button)
+                    {
+                        DisableButtonDragging((Button)element);
                     }
                     element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
                     element.MouseMove -= Element_MouseMove;
@@ -236,6 +257,114 @@ namespace RailwayTickets
                 isDragging = false;
                 selectedComboBox.ReleaseMouseCapture();
                 selectedComboBox = null;
+            }
+        }
+
+        private void EnableCheckBoxDragging(CheckBox checkBox)
+        {
+            checkBox.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            checkBox.PreviewMouseLeftButtonDown += CheckBox_MouseLeftButtonDown;
+            checkBox.PreviewMouseMove += CheckBox_MouseMove;
+            checkBox.PreviewMouseLeftButtonUp += CheckBox_MouseLeftButtonUp;
+        }
+
+        private void DisableCheckBoxDragging(CheckBox checkBox)
+        {
+            checkBox.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            checkBox.PreviewMouseLeftButtonDown -= CheckBox_MouseLeftButtonDown;
+            checkBox.PreviewMouseMove -= CheckBox_MouseMove;
+            checkBox.PreviewMouseLeftButtonUp -= CheckBox_MouseLeftButtonUp;
+        }
+        private CheckBox selectedCheckBox;
+
+        private void CheckBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode)
+            {
+                isDragging = true;
+                startPoint = e.GetPosition(null);
+                selectedCheckBox = sender as CheckBox;
+                selectedCheckBox.CaptureMouse();
+                e.Handled = true; // Предотвращаем начало выбора элемента в CheckBox
+            }
+        }
+
+        private void CheckBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedCheckBox != null)
+            {
+                Point newPoint = e.GetPosition(gridFarAway);
+                double left = newPoint.X - startPoint.X + (double)selectedCheckBox.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)selectedCheckBox.GetValue(Canvas.TopProperty);
+
+                selectedCheckBox.SetValue(Canvas.LeftProperty, left);
+                selectedCheckBox.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+            }
+        }
+
+        private void CheckBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedCheckBox != null)
+            {
+                isDragging = false;
+                selectedCheckBox.ReleaseMouseCapture();
+                selectedCheckBox = null;
+            }
+        }
+
+        private void EnableButtonDragging(Button button)
+        {
+            button.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            button.PreviewMouseLeftButtonDown += Button_MouseLeftButtonDown;
+            button.PreviewMouseMove += Button_MouseMove;
+            button.PreviewMouseLeftButtonUp += Button_MouseLeftButtonUp;
+        }
+
+        private void DisableButtonDragging(Button button)
+        {
+            button.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            button.PreviewMouseLeftButtonDown -= Button_MouseLeftButtonDown;
+            button.PreviewMouseMove -= Button_MouseMove;
+            button.PreviewMouseLeftButtonUp -= Button_MouseLeftButtonUp;
+        }
+        private Button selectedButton;
+
+        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode)
+            {
+                isDragging = true;
+                startPoint = e.GetPosition(null);
+                selectedButton = sender as Button;
+                selectedButton.CaptureMouse();
+                e.Handled = true; // Предотвращаем начало нажатия кнопки
+            }
+        }
+
+        private void Button_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedButton != null)
+            {
+                Point newPoint = e.GetPosition(gridFarAway);
+                double left = newPoint.X - startPoint.X + (double)selectedButton.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)selectedButton.GetValue(Canvas.TopProperty);
+
+                selectedButton.SetValue(Canvas.LeftProperty, left);
+                selectedButton.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+            }
+        }
+
+        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isEditingMode && isDragging && selectedButton != null)
+            {
+                isDragging = false;
+                selectedButton.ReleaseMouseCapture();
+                selectedButton = null;
             }
         }
 

@@ -3,15 +3,15 @@
   "WorkspaceRootPath": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:maintickets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\maintickets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\maintickets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:maintickets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|d:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\kursa4 proga\\repository\\traintickets\\registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E37B1F10-9E39-4F49-A1F2-1F0C7EED7F7F}|RailwayTickets.csproj|solutionrelative:registration.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -50,8 +50,7 @@
               "RelativeToolTip": "Registration.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T12:28:04.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-14T12:28:04.56Z"
             },
             {
               "$type": "Document",
@@ -62,8 +61,7 @@
               "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-13T13:19:30.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-13T13:19:30.982Z"
             },
             {
               "$type": "Document",
@@ -75,8 +73,7 @@
               "RelativeToolTip": "MainWindow.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-13T13:19:32.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-13T13:19:32.999Z"
             },
             {
               "$type": "Document",
@@ -86,7 +83,7 @@
               "RelativeDocumentMoniker": "MainTickets.xaml.cs",
               "ToolTip": "D:\\\u044F\u043C\u0430\u043A\u0430\u043A\u0430\\KURSA4 PROGA\\repository\\traintickets\\MainTickets.xaml.cs*",
               "RelativeToolTip": "MainTickets.xaml.cs*",
-              "ViewState": "AQIAAMUAAAAAAAAAAAAQwOEAAABDAAAA",
+              "ViewState": "AQIAADIAAAAAAAAAAAA7wFAAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-13T13:19:27.144Z",
               "EditorCaption": ""
