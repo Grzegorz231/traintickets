@@ -14,8 +14,9 @@ namespace RailwayTickets
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
             databaseManager.OpenConnection();
-            NpgsqlCommand commandToCheckUser = new NpgsqlCommand(@"SELECT employee_login, employee_password
+            NpgsqlCommand commandToCheckUser = new NpgsqlCommand(@"SELECT employee_login, employee_password, cashbox_id
                                                                     FROM public.employee
+                                                                    JOIN cashbox ON cashbox.employee_id = employee.employee_id
                                                                     WHERE employee_login = @login", databaseManager.connection);
             string login = txtBoxLogin.Text;
             string password = txtBoxPassword.Text;
@@ -29,11 +30,14 @@ namespace RailwayTickets
                 string dbLogin, dbPassword;
                 dbLogin = reader["employee_login"].ToString();
                 dbPassword = reader["employee_password"].ToString();
+                string cashboxId = "";
+                cashboxId = reader["cashbox_id"].ToString();
 
                 if (login == dbLogin && password == dbPassword)
                 {         
                     MainTickets mainTickets = new MainTickets();
                     mainTickets.Show();
+                    mainTickets.cashboxId.Content = "Номер кассы:" + cashboxId;
                     this.Close();
                 }
                 else
