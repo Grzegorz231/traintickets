@@ -150,11 +150,37 @@ namespace RailwayTickets
                                                                         @passengerSurname, 
                                                                         @passengerPatronymic 
                                                                     ", databaseManager.connection);
+                NpgsqlCommand commandToAddTicket = new NpgsqlCommand(@"INSERT INTO public.ticket (
+                                                                       ticket_id,
+                                                                       passenger_id,
+                                                                       station_id_from,
+                                                                       station_id_to,
+                                                                       cashbox_id,
+                                                                       place_id,
+                                                                       ticket_unique_number,
+                                                                       ticket_date,
+                                                                       ticket_time_from,
+                                                                       ticket_time_to,
+                                                                       ticket_total_time
+                                                                    )
+                                                                    SELECT
+                                                                        nextval('ticket_id_sec'::regclass),
+                                                                        @passengerId,
+                                                                        @stationIdFrom,
+                                                                        @stationIdTo,
+                                                                        @cashboxId,
+                                                                        @placeId,
+                                                                        nextval('ticket_unique_number'::regclass),
+                                                                        @ticketDate,
+                                                                        @ticketTimeFrom,
+                                                                        @ticketTimeTo,
+                                                                        @ticketTotalTime", databaseManager.connection);
                 string passSerie = txtBoxPassSerie.Text;
                 string passNumber = txtBoxPassNum.Text;
                 string firstName = txtBoxName.Text;
                 string lastName = txtBoxLastName.Text;
                 string patronymic = txtBoxPatronymic.Text;
+                string stationIdFrom = comboBoxStationFrom.SelectedItem.ToString();
 
                 if (string.IsNullOrEmpty(passSerie))
                 {
