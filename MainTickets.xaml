@@ -77,7 +77,7 @@
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="819" Stretch="Fill" Canvas.Top="205" VerticalAlignment="Top" Width="567">
                             <Grid Height="48" Width="567">
                                 <Label x:Name="lblStationTo" Content="Станция назначения:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
-                                <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" Margin="247,0,0,0" DropDownOpened="comboBoxStationTo_DropDownOpened"/>
+                                <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" Margin="247,0,0,0" DropDownOpened="comboBoxStationTo_DropDownOpened" FontSize="24"/>
                             </Grid>
                         </Viewbox>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="846" Stretch="Fill" Canvas.Top="46" VerticalAlignment="Top" Width="540">
@@ -123,6 +123,7 @@
                         </Viewbox>
                         <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="1663" Canvas.Top="684" Height="113" Width="241" FontSize="72" Click="btnPrint_Click"/>
                         <Label x:Name="lblIsEditMode" Content="" Canvas.Left="10" Canvas.Top="684" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="cashboxId" Content="Номер кассы:" Canvas.Left="1519" Canvas.Top="84" FontSize="24"/>
                     </Canvas>
                 </Viewbox>
             </TabItem>

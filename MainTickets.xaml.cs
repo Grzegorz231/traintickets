@@ -93,7 +93,27 @@ namespace RailwayTickets
 
         private void comboBoxStationFrom_DropDownOpened(object sender, EventArgs e)
         {
+            databaseManager.OpenConnection();
+            comboBoxStationFrom.Items.Clear();
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(@"SELECT station_name
+                                                            FROM station", databaseManager.connection);
 
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    comboBoxStationFrom.Items.Add(reader["station_name"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            databaseManager.CloseConnection();
         }
 
         private void menuItemLoad_Click(object sender, RoutedEventArgs e)
