@@ -70,18 +70,14 @@
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="806" Stretch="Fill" Canvas.Top="258" VerticalAlignment="Top" Width="580">
                             <Grid Height="48" Width="580">
                                 <Label x:Name="lblStationFrom" Content="Станция отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
-                                <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" TextSearch.TextPath="Name" FontSize="24" Height="48" Margin="260,0,0,0">
-                                    <ComboBoxItem Content="Пермь-2"/>
-                                    <ComboBoxItem Content="Пермь-1"/>
-                                    <ComboBoxItem Content="Чусовой"/>
-                                    <ComboBoxItem Content="Калино"/>
+                                <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" TextSearch.TextPath="Name" FontSize="24" Height="48" Margin="260,0,0,0" DropDownOpened="comboBoxStationFrom_DropDownOpened">
                                 </ComboBox>
                             </Grid>
                         </Viewbox>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="819" Stretch="Fill" Canvas.Top="205" VerticalAlignment="Top" Width="567">
                             <Grid Height="48" Width="567">
                                 <Label x:Name="lblStationTo" Content="Станция назначения:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
-                                <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" Margin="247,0,0,0"/>
+                                <ComboBox x:Name="comboBoxStationTo" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" Margin="247,0,0,0" DropDownOpened="comboBoxStationTo_DropDownOpened"/>
                             </Grid>
                         </Viewbox>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="846" Stretch="Fill" Canvas.Top="46" VerticalAlignment="Top" Width="540">

@@ -37,7 +37,7 @@ namespace RailwayTickets
             txtBoxPatronymic.IsEnabled = true;
         }
 
-        private void LoadDataIntoComboBox()
+        private void comboBoxNumPlace_DropDownOpened(object sender, EventArgs e)
         {
             databaseManager.OpenConnection();
             comboBoxNumPlace.Items.Clear();
@@ -66,10 +66,34 @@ namespace RailwayTickets
             }
             databaseManager.CloseConnection();
         }
-
-        private void comboBoxNumPlace_DropDownOpened(object sender, EventArgs e)
+        private void comboBoxStationTo_DropDownOpened(object sender, EventArgs e)
         {
-            LoadDataIntoComboBox();
+            databaseManager.OpenConnection();
+            comboBoxStationTo.Items.Clear();
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(@"SELECT station_name
+                                                            FROM station", databaseManager.connection);
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    comboBoxStationTo.Items.Add(reader["station_name"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            databaseManager.CloseConnection();
+        }
+
+        private void comboBoxStationFrom_DropDownOpened(object sender, EventArgs e)
+        {
+
         }
 
         private void menuItemLoad_Click(object sender, RoutedEventArgs e)
