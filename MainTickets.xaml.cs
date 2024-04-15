@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace RailwayTickets
 {
@@ -8,6 +12,8 @@ namespace RailwayTickets
     {
         static string patronymicStatic = "";
         private bool isEditingMode = false;
+        private List<Line> guideLines = new List<Line>();
+
         public MainTickets()
         {
             InitializeComponent();
@@ -48,10 +54,82 @@ namespace RailwayTickets
         private bool isDragging = false;
         private Point startPoint;
 
+        private void ShowAlignmentGuides(UIElement element)
+        {
+            ClearAlignmentGuides();
+            // Создание списка для хранения новых элементов
+            List<UIElement> newElements = new List<UIElement>();
+
+            double elementLeft = Canvas.GetLeft(element);
+            double elementTop = Canvas.GetTop(element);
+            double elementRight = elementLeft + element.RenderSize.Width;
+            double elementBottom = elementTop + element.RenderSize.Height;
+
+            foreach (UIElement sibling in gridFarAway.Children)
+            {
+                if (sibling != element)
+                {
+                    double siblingLeft = Canvas.GetLeft(sibling);
+                    double siblingTop = Canvas.GetTop(sibling);
+                    double siblingRight = siblingLeft + sibling.RenderSize.Width;
+                    double siblingBottom = siblingTop + sibling.RenderSize.Height;
+
+                    // Проверка, находятся ли элементы близко друг к другу по вертикали
+                    if (Math.Abs(elementLeft - siblingLeft) < 10)
+                    {
+                        // Создание вертикальной полоски привязывания
+                        Line verticalGuide = new Line();
+                        verticalGuide.Stroke = Brushes.Black;
+                        verticalGuide.X1 = elementLeft;
+                        verticalGuide.X2 = siblingLeft;
+                        verticalGuide.Y1 = Math.Min(elementTop, siblingTop);
+                        verticalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(verticalGuide);
+                    }
+
+                    // Проверка, находятся ли элементы близко друг к другу по горизонтали
+                    if (Math.Abs(elementTop - siblingTop) < 10)
+                    {
+                        // Создание горизонтальной полоски привязывания
+                        Line horizontalGuide = new Line();
+                        horizontalGuide.Stroke = Brushes.Black;
+                        horizontalGuide.X1 = Math.Min(elementLeft, siblingLeft);
+                        horizontalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        horizontalGuide.Y1 = elementTop;
+                        horizontalGuide.Y2 = siblingTop;
+                        newElements.Add(horizontalGuide);
+                    }
+                }
+            }
+
+            // Добавление новых элементов в коллекцию
+            foreach (UIElement newElement in newElements)
+            {
+                gridFarAway.Children.Add(newElement);
+            }
+        }
+
+        private void ClearAlignmentGuides()
+        {
+            // Удаление всех полосок привязывания из холста
+            List<UIElement> guidesToRemove = new List<UIElement>();
+            foreach (UIElement child in gridFarAway.Children)
+            {
+                if (child is Line)
+                {
+                    guidesToRemove.Add(child);
+                }
+            }
+
+            foreach (UIElement guide in guidesToRemove)
+            {
+                gridFarAway.Children.Remove(guide);
+            }
+        }
+
         private void menuItemEdit_Click(object sender, RoutedEventArgs e)
         {
             isEditingMode = !isEditingMode;
-
             if (isEditingMode)
             {
                 lblIsEditMode.Content = "Включен режим редактирования!";
@@ -88,6 +166,7 @@ namespace RailwayTickets
             }
             else
             {
+                ClearAlignmentGuides();
                 lblIsEditMode.Content = "Не в режиме редактирования";
                 // Отключаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
@@ -109,6 +188,10 @@ namespace RailwayTickets
                     if (element is Button)
                     {
                         DisableButtonDragging((Button)element);
+                    }
+                    if (element is Viewbox)
+                    {
+                        ((Viewbox)element).Cursor = Cursors.Arrow;
                     }
                     element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
                     element.MouseMove -= Element_MouseMove;
@@ -141,6 +224,8 @@ namespace RailwayTickets
                 element.SetValue(Canvas.TopProperty, top);
 
                 startPoint = newPoint;
+
+                ShowAlignmentGuides(element);
             }
         }
 
