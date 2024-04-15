@@ -57,7 +57,6 @@ namespace RailwayTickets
         private void ShowAlignmentGuides(UIElement element)
         {
             ClearAlignmentGuides();
-            // Создание списка для хранения новых элементов
             List<UIElement> newElements = new List<UIElement>();
 
             double elementLeft = Canvas.GetLeft(element);
@@ -74,12 +73,10 @@ namespace RailwayTickets
                     double siblingRight = siblingLeft + sibling.RenderSize.Width;
                     double siblingBottom = siblingTop + sibling.RenderSize.Height;
 
-                    // Проверка, находятся ли элементы близко друг к другу по вертикали
-                    if (Math.Abs(elementLeft - siblingLeft) < 10)
+                    if (Math.Abs(elementLeft - siblingLeft) < 3)
                     {
-                        // Создание вертикальной полоски привязывания
                         Line verticalGuide = new Line();
-                        verticalGuide.Stroke = Brushes.Black;
+                        verticalGuide.Stroke = Brushes.Red;
                         verticalGuide.X1 = elementLeft;
                         verticalGuide.X2 = siblingLeft;
                         verticalGuide.Y1 = Math.Min(elementTop, siblingTop);
@@ -87,22 +84,40 @@ namespace RailwayTickets
                         newElements.Add(verticalGuide);
                     }
 
-                    // Проверка, находятся ли элементы близко друг к другу по горизонтали
-                    if (Math.Abs(elementTop - siblingTop) < 10)
+                    if (Math.Abs(elementTop - siblingTop) < 3)
                     {
-                        // Создание горизонтальной полоски привязывания
                         Line horizontalGuide = new Line();
-                        horizontalGuide.Stroke = Brushes.Black;
+                        horizontalGuide.Stroke = Brushes.Red;
                         horizontalGuide.X1 = Math.Min(elementLeft, siblingLeft);
                         horizontalGuide.X2 = Math.Max(elementRight, siblingRight);
                         horizontalGuide.Y1 = elementTop;
                         horizontalGuide.Y2 = siblingTop;
                         newElements.Add(horizontalGuide);
                     }
+
+                    if (Math.Abs(elementRight - siblingRight) < 3)
+                    {
+                        Line verticalGuide = new Line();
+                        verticalGuide.Stroke = Brushes.Red;
+                        verticalGuide.X1 = Math.Max(elementRight, siblingRight);
+                        verticalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        verticalGuide.Y1 = Math.Min(elementTop, siblingTop);
+                        verticalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(verticalGuide);
+                    }
+
+                    if (Math.Abs(elementBottom - siblingBottom) < 3)
+                    {
+                        Line horizontalGuide = new Line();
+                        horizontalGuide.Stroke = Brushes.Red;
+                        horizontalGuide.X1 = Math.Min(elementLeft, siblingLeft);
+                        horizontalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        horizontalGuide.Y1 = Math.Max(elementBottom, siblingBottom);
+                        horizontalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(horizontalGuide);
+                    }
                 }
             }
-
-            // Добавление новых элементов в коллекцию
             foreach (UIElement newElement in newElements)
             {
                 gridFarAway.Children.Add(newElement);
@@ -111,7 +126,6 @@ namespace RailwayTickets
 
         private void ClearAlignmentGuides()
         {
-            // Удаление всех полосок привязывания из холста
             List<UIElement> guidesToRemove = new List<UIElement>();
             foreach (UIElement child in gridFarAway.Children)
             {
@@ -133,7 +147,6 @@ namespace RailwayTickets
             if (isEditingMode)
             {
                 lblIsEditMode.Content = "Включен режим редактирования!";
-                // Включаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
                     if (element is TextBox)
@@ -168,7 +181,6 @@ namespace RailwayTickets
             {
                 ClearAlignmentGuides();
                 lblIsEditMode.Content = "Не в режиме редактирования";
-                // Отключаем функциональность перетаскивания элементов
                 foreach (UIElement element in gridFarAway.Children)
                 {
                     if (element is TextBox)
@@ -235,6 +247,7 @@ namespace RailwayTickets
             {
                 isDragging = false;
                 ((UIElement)sender).ReleaseMouseCapture();
+                ClearAlignmentGuides();
             }
         }
 
@@ -293,7 +306,7 @@ namespace RailwayTickets
 
         private void EnableComboBoxDragging(ComboBox comboBox)
         {
-            comboBox.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            comboBox.Cursor = Cursors.Hand;
             comboBox.PreviewMouseLeftButtonDown += ComboBox_MouseLeftButtonDown;
             comboBox.PreviewMouseMove += ComboBox_MouseMove;
             comboBox.PreviewMouseLeftButtonUp += ComboBox_MouseLeftButtonUp;
@@ -301,7 +314,7 @@ namespace RailwayTickets
 
         private void DisableComboBoxDragging(ComboBox comboBox)
         {
-            comboBox.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            comboBox.Cursor = Cursors.Arrow;
             comboBox.PreviewMouseLeftButtonDown -= ComboBox_MouseLeftButtonDown;
             comboBox.PreviewMouseMove -= ComboBox_MouseMove;
             comboBox.PreviewMouseLeftButtonUp -= ComboBox_MouseLeftButtonUp;
@@ -316,7 +329,7 @@ namespace RailwayTickets
                 startPoint = e.GetPosition(null);
                 selectedComboBox = sender as ComboBox;
                 selectedComboBox.CaptureMouse();
-                e.Handled = true; // Предотвращаем начало выбора элемента в ComboBox
+                e.Handled = true;
             }
         }
 
@@ -347,7 +360,7 @@ namespace RailwayTickets
 
         private void EnableCheckBoxDragging(CheckBox checkBox)
         {
-            checkBox.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            checkBox.Cursor = Cursors.Hand;
             checkBox.PreviewMouseLeftButtonDown += CheckBox_MouseLeftButtonDown;
             checkBox.PreviewMouseMove += CheckBox_MouseMove;
             checkBox.PreviewMouseLeftButtonUp += CheckBox_MouseLeftButtonUp;
@@ -355,7 +368,7 @@ namespace RailwayTickets
 
         private void DisableCheckBoxDragging(CheckBox checkBox)
         {
-            checkBox.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            checkBox.Cursor = Cursors.Arrow;
             checkBox.PreviewMouseLeftButtonDown -= CheckBox_MouseLeftButtonDown;
             checkBox.PreviewMouseMove -= CheckBox_MouseMove;
             checkBox.PreviewMouseLeftButtonUp -= CheckBox_MouseLeftButtonUp;
@@ -370,7 +383,7 @@ namespace RailwayTickets
                 startPoint = e.GetPosition(null);
                 selectedCheckBox = sender as CheckBox;
                 selectedCheckBox.CaptureMouse();
-                e.Handled = true; // Предотвращаем начало выбора элемента в CheckBox
+                e.Handled = true;
             }
         }
 
@@ -401,7 +414,7 @@ namespace RailwayTickets
 
         private void EnableButtonDragging(Button button)
         {
-            button.Cursor = Cursors.Hand; // Устанавливаем курсор для обозначения, что элемент можно перемещать
+            button.Cursor = Cursors.Hand;
             button.PreviewMouseLeftButtonDown += Button_MouseLeftButtonDown;
             button.PreviewMouseMove += Button_MouseMove;
             button.PreviewMouseLeftButtonUp += Button_MouseLeftButtonUp;
@@ -409,7 +422,7 @@ namespace RailwayTickets
 
         private void DisableButtonDragging(Button button)
         {
-            button.Cursor = Cursors.Arrow; // Возвращаем обычный курсор
+            button.Cursor = Cursors.Arrow;
             button.PreviewMouseLeftButtonDown -= Button_MouseLeftButtonDown;
             button.PreviewMouseMove -= Button_MouseMove;
             button.PreviewMouseLeftButtonUp -= Button_MouseLeftButtonUp;
@@ -424,7 +437,7 @@ namespace RailwayTickets
                 startPoint = e.GetPosition(null);
                 selectedButton = sender as Button;
                 selectedButton.CaptureMouse();
-                e.Handled = true; // Предотвращаем начало нажатия кнопки
+                e.Handled = true;
             }
         }
 
