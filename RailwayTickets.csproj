@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileManager.cs" />
     <Compile Include="MainTickets.xaml.cs">
       <DependentUpon>MainTickets.xaml</DependentUpon>
     </Compile>

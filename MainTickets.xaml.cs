@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
+using System.Windows.Markup;
 
 namespace RailwayTickets
 {
@@ -125,17 +128,87 @@ namespace RailwayTickets
 
         private void menuItemLoad_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
+            openFileDialog.Filter = "XAML files (*.xaml)|*.xaml|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+
+                LoadInterface(filePath);
+            }
+        }
+        private void LoadInterface(string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            {
+                object obj = XamlReader.Load(fs);
+
+                if (obj is TabControl)
+                {
+                    tabControl.Items.Clear();
+
+                    TabControl loadedTabControl = (TabControl)obj;
+                    foreach (object item in loadedTabControl.Items)
+                    {
+                        if (item is TabItem)
+                        {
+                            TabItem loadedTabItem = (TabItem)item;
+                            TabItem newTabItem = new TabItem();
+                            newTabItem.Header = loadedTabItem.Header;
+                            newTabItem.Content = loadedTabItem.Content;
+
+                            foreach (UIElement childElement in (loadedTabItem.Content as Panel).Children)
+                            {
+                                if (childElement is Button)
+                                {
+                                    Button button = childElement as Button;
+                                    Button newButton = new Button();
+                                    newButton.Content = button.Content;
+                                    newButton.Click += button.Click;
+                                    newTabItem.Content = newButton;
+                                }
+                            }
+
+                            tabControl.Items.Add(newTabItem);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Неверный формат файла XAML.");
+                }
+            }
+        }
+
+        private void SaveInterface(string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                XamlWriter.Save(tabControl, fs);
+            }
         }
 
         private void menuItemSave_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
+            saveFileDialog.Filter = "XAML files (*.xaml)|*.xaml|All files (*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                SaveInterface(filePath);
+            }
         }
 
         private void menuItemExit_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
