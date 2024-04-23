@@ -1,6 +1,8 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -140,6 +142,7 @@ namespace RailwayTickets
             try
             {
                 databaseManager.OpenConnection();
+                // Добавляем пассажира в базу
                 NpgsqlCommand commandToAddPassenger = new NpgsqlCommand(@"INSERT INTO public.passenger (
                                                                         passenger_id, 
                                                                         passenger_passport, 
@@ -152,8 +155,14 @@ namespace RailwayTickets
                                                                         @passport_serie || ' ' || @passport_number, 
                                                                         @passengerName, 
                                                                         @passengerSurname, 
-                                                                        @passengerPatronymic 
+                                                                        @passengerPatronymic
+                                                                    WHERE NOT EXISTS (
+                                                                        SELECT 1
+                                                                        FROM public.passenger
+                                                                        WHERE passenger_passport = @passport_serie || ' ' || @passport_number
+                                                                    )
                                                                     ", databaseManager.connection);
+                // Добавляем билет в базу
                 NpgsqlCommand commandToAddTicket = new NpgsqlCommand(@"INSERT INTO public.ticket (
                                                                        ticket_id,
                                                                        passenger_id,
@@ -169,22 +178,113 @@ namespace RailwayTickets
                                                                     )
                                                                     SELECT
                                                                         nextval('ticket_id_sec'::regclass),
-                                                                        @passengerId,
+                                                                        passenger.passenger_id,
                                                                         @stationIdFrom,
                                                                         @stationIdTo,
                                                                         @cashboxId,
-                                                                        @placeId,
+                                                                        (SELECT place_id 
+                                                                         FROM place 
+                                                                         JOIN carriage ON place.carriage_id = carriage.carriage_id
+                                                                         WHERE carriage.carriage_type = @carriageType
+                                                                         AND place.place_number = @placeNumber
+                                                                         LIMIT 1),
                                                                         nextval('ticket_unique_number'::regclass),
                                                                         @ticketDate,
-                                                                        @ticketTimeFrom,
-                                                                        @ticketTimeTo,
-                                                                        @ticketTotalTime", databaseManager.connection);
+                                                                        '06:00'::TIME + (random() * '24 hours'::INTERVAL) as ticket_time_from,
+                                                                        '06:00'::TIME + (random() * '24 hours'::INTERVAL) as ticket_time_to,
+                                                                        ('06:00'::TIME + (random() * '24 hours'::INTERVAL)) - ('06:00'::TIME + (random() * '24 hours'::INTERVAL)) as ticket_total_time
+                                                                    FROM public.passenger
+                                                                    WHERE passenger.passenger_passport = @passport_serie || ' ' || @passport_number
+                                                                    LIMIT 1;", databaseManager.connection);
+                // Ищем id станции отправления
+                NpgsqlCommand commandToGetStationIdFrom = new NpgsqlCommand(@"SELECT station_id 
+                                                                              FROM public.station 
+                                                                              WHERE station_name = @stationNameFrom", databaseManager.connection);
+                // Ищем id станции назначения
+                NpgsqlCommand commandToGetStationIdTo = new NpgsqlCommand(@"SELECT station_id 
+                                                                            FROM public.station 
+                                                                            WHERE station_name = @stationNameTo", databaseManager.connection);
+                // Ищем место по номеру и типу вагона
+                NpgsqlCommand commandToGetPlaceId = new NpgsqlCommand(@"SELECT place_id 
+                                                                        FROM public.place 
+                                                                        JOIN public.carriage ON place.carriage_id = carriage.carriage_id
+                                                                        WHERE carriage.carriage_type = @carriageType
+                                                                        AND place.place_number = @placeNumber
+                                                                        LIMIT 1", databaseManager.connection);
+
                 string passSerie = txtBoxPassSerie.Text;
                 string passNumber = txtBoxPassNum.Text;
                 string firstName = txtBoxName.Text;
                 string lastName = txtBoxLastName.Text;
                 string patronymic = txtBoxPatronymic.Text;
-                //string stationIdFrom = comboBoxStationFrom.SelectedItem.ToString();
+                string carriageType = comboBoxTrainType.Text;
+                int stationIdFrom = 0, stationIdTo = 0, placeId = 0;
+                string cashboxIdText = lblcashboxId.Content.ToString();
+                int cashboxId = int.Parse(cashboxIdText.Split(':')[1].Trim());
+         
+
+
+                try
+                {
+                    commandToGetStationIdFrom.Parameters.AddWithValue("@stationNameFrom", comboBoxStationFrom.SelectedItem.ToString());
+                }
+                catch
+                {
+                    throw new Exception("Не выбрана станция отправления!");
+                }
+                NpgsqlDataReader reader = commandToGetStationIdFrom.ExecuteReader();
+                if (reader.Read())
+                {
+                    string stationIdFromString  = reader["station_id"].ToString();
+                    int.TryParse(stationIdFromString, out stationIdFrom);
+                }
+                reader.Close();
+
+
+
+                try
+                {
+                    commandToGetStationIdTo.Parameters.AddWithValue("@stationNameTo", comboBoxStationTo.SelectedItem.ToString());
+                }
+                catch
+                {
+                    throw new Exception("Не выбрана станция назначения!");
+                }
+                reader = commandToGetStationIdTo.ExecuteReader();
+                if (reader.Read())
+                {
+                    string stationIdToString = reader["station_id"].ToString();
+                    int.TryParse(stationIdToString, out stationIdTo);
+                }
+                reader.Close();
+
+
+               
+                try
+                {
+                    commandToGetPlaceId.Parameters.AddWithValue("@carriageType", carriageType);
+                }
+                catch
+                {
+                    throw new Exception("Не выбран тип вагона!");
+                }
+                try
+                {
+                    commandToGetPlaceId.Parameters.AddWithValue("@placeNumber", comboBoxNumPlace.SelectedItem.ToString());
+                }
+                catch
+                {
+                    throw new Exception("Не выбран номер места!");
+                }
+                reader = commandToGetPlaceId.ExecuteReader();
+                if (reader.Read())
+                {
+                    string placeIdString = reader["place_id"].ToString();
+                    int.TryParse(placeIdString, out placeId);
+                }
+                reader.Close();
+
+
 
                 if (string.IsNullOrEmpty(passSerie))
                 {
@@ -216,22 +316,42 @@ namespace RailwayTickets
                     throw new Exception("Поле с фамилией не может быть пустым!");
                 }
 
+                // Добавляем данные для пассажира
                 commandToAddPassenger.Parameters.AddWithValue("@passport_serie", passSerie);
                 commandToAddPassenger.Parameters.AddWithValue("@passport_number", passNumber);
                 commandToAddPassenger.Parameters.AddWithValue("@passengerName", firstName);
                 commandToAddPassenger.Parameters.AddWithValue("@passengerSurname", lastName);
                 commandToAddPassenger.Parameters.AddWithValue("@passengerPatronymic", patronymic);
 
+                // Добавляем данные для билета
+                commandToAddTicket.Parameters.AddWithValue("@passport_serie", passSerie);
+                commandToAddTicket.Parameters.AddWithValue("@passport_number", passNumber);
+                commandToAddTicket.Parameters.AddWithValue("@stationIdFrom", stationIdFrom);
+                commandToAddTicket.Parameters.AddWithValue("@stationIdTo", stationIdTo);
+                commandToAddTicket.Parameters.AddWithValue("@cashboxId", cashboxId);
+                commandToAddTicket.Parameters.AddWithValue("@placeNumber", comboBoxNumPlace.SelectedItem.ToString());
+                commandToAddTicket.Parameters.AddWithValue("@carriageType", comboBoxTrainType.Text);
+                string ticketDateText = txtBoxDateFrom.Text;
+                DateTime ticketDate;
+                if (!DateTime.TryParseExact(ticketDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out ticketDate))
+                {
+                    throw new Exception("Неверный формат даты. Дата должна быть в формате 'ГГГГ-ММ-ДД'.");
+                }
+                commandToAddTicket.Parameters.AddWithValue("@ticketDate", DateTime.Parse(txtBoxDateFrom.Text));
+
+
+
                 if (txtBoxPassSerie.Text.Length > 0 && txtBoxPassNum.Text.Length > 0 && txtBoxName.Text.Length > 0 && txtBoxLastName.Text.Length > 0)
                 {
                     try
                     {
                         commandToAddPassenger.ExecuteNonQuery();
-                        MessageBox.Show("Пользователь успешно добавлен!");
+                        commandToAddTicket.ExecuteNonQuery();
+                        MessageBox.Show("Идёт печать...");
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Пользователь с данными паспортными данными уже существует!");
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
@@ -795,6 +915,12 @@ namespace RailwayTickets
                 isEditingModeFarAway = false;
                 isEditingModeNearCities = false;
             }
+        }
+
+        private void txtBoxPassSerie_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
