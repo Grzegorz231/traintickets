@@ -17,15 +17,19 @@
                 <MenuItem x:Name="menuItemEdit" Header="Редактировать" Click="menuItemEdit_Click"/>
             </MenuItem>
         </Menu>
-        <TabControl Margin="0,23,0,-23">
-            <TabItem Header="Поезда дальнего следования">
+        <TabControl x:Name="tabControl" Margin="0,23,0,-23" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem x:Name="tabItemFarAway" Header="Поезда дальнего следования">
                 <Viewbox Stretch="Fill">
                     <Canvas x:Name="gridFarAway" Background="White" Height="1036" Width="1914">
-                        <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="10" Canvas.Top="424" FontSize="24"/>
-                        <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Canvas.Left="10" Canvas.Top="470" Height="48" FontSize="24">
-                            <ComboBoxItem Content="Плацкарт"/>
-                            <ComboBoxItem Content="Купе"/>
-                        </ComboBox>
+                        <Viewbox HorizontalAlignment="Left" Height="94" Canvas.Left="10" Stretch="Fill" Canvas.Top="424" VerticalAlignment="Top" Width="320">
+                            <Grid Height="94" Width="320">
+                                <Label x:Name="lblTrainType" Content="Тип вагона" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
+                                <ComboBox x:Name="comboBoxTrainType" HorizontalAlignment="Center" VerticalAlignment="Top" Width="320" Height="48" FontSize="24" Margin="0,46,0,0">
+                                    <ComboBoxItem Content="Плацкарт"/>
+                                    <ComboBoxItem Content="Купе"/>
+                                </ComboBox>
+                            </Grid>
+                        </Viewbox>
                         <Label x:Name="lblPassengerData" Content="Данные пассажира" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="291" FontSize="24" Canvas.Top="4"/>
                         <Viewbox HorizontalAlignment="Left" Canvas.Left="222" Stretch="Fill" Canvas.Top="46" VerticalAlignment="Center" Width="389">
                             <Grid Height="48" Width="389">
@@ -66,12 +70,11 @@
                                 <Label x:Name="lblPassNum" Content="Номер паспорта:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
                             </Grid>
                         </Viewbox>
-                        <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxNoPatronymic_Checked" Unchecked="checkBoxNoPatronymic_Unchecked" Canvas.Left="616" Canvas.Top="159" FontSize="24"/>
+                        <CheckBox x:Name="checkBoxNoPatronymic" Content="Нет отчества" Checked="checkBoxNoPatronymic_Checked" Unchecked="checkBoxNoPatronymic_Unchecked" FontSize="24" Height="32" Width="162" Canvas.Left="616" Canvas.Top="160"/>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="806" Stretch="Fill" Canvas.Top="258" VerticalAlignment="Top" Width="580">
                             <Grid Height="48" Width="580">
                                 <Label x:Name="lblStationFrom" Content="Станция отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
-                                <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" TextSearch.TextPath="Name" FontSize="24" Height="48" Margin="260,0,0,0" DropDownOpened="comboBoxStationFrom_DropDownOpened">
-                                </ComboBox>
+                                <ComboBox x:Name="comboBoxStationFrom" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" TextSearch.TextPath="Name" FontSize="24" Height="48" Margin="260,0,0,0" DropDownOpened="comboBoxStationFrom_DropDownOpened"/>
                             </Grid>
                         </Viewbox>
                         <Viewbox HorizontalAlignment="Left" Height="48" Canvas.Left="819" Stretch="Fill" Canvas.Top="205" VerticalAlignment="Top" Width="567">
@@ -121,14 +124,93 @@
                                 </ComboBox>
                             </Grid>
                         </Viewbox>
-                        <Button x:Name="btnPrint" Content="Печать" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="1663" Canvas.Top="684" Height="113" Width="241" FontSize="72" Click="btnPrint_Click"/>
-                        <Label x:Name="lblIsEditMode" Content="" Canvas.Left="10" Canvas.Top="684" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label x:Name="cashboxId" Content="Номер кассы:" Canvas.Left="1519" Canvas.Top="84" FontSize="24"/>
+                        <Button x:Name="btnPrint" Content="Печать" FontSize="72" Click="btnPrint_Click" Height="113" Width="241" Canvas.Left="1663" Canvas.Top="608"/>
+                        <Label x:Name="lblIsEditMode" Content="Для вида" Canvas.Left="10" Canvas.Top="684" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="cashboxId" Content="" FontSize="24" Height="42" Width="210" Canvas.Left="1486" Canvas.Top="49" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Canvas>
                 </Viewbox>
             </TabItem>
-            <TabItem Header="Пригородные поезда">
-                <Grid Background="White"/>
+            <TabItem x:Name="tabItemNearCities" Header="Пригородные поезда">
+                <Canvas x:Name="gridNearCities" Background="White" Height="1036" Width="1914">
+                    <Viewbox Height="42" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="186" Canvas.Left="1616" Canvas.Top="47" Stretch="Fill">
+                        <Label x:Name="lblCashboxIdNearcity" Content="" FontSize="24" Height="42" Width="186"/>
+                    </Viewbox>
+                    <Viewbox HorizontalAlignment="Left" Height="48" Stretch="Fill" VerticalAlignment="Top" Width="420" Margin="170,78,0,0"/>
+                    <Viewbox HorizontalAlignment="Left" Height="48" Stretch="Fill" VerticalAlignment="Top" Width="567" Canvas.Left="23" Canvas.Top="131">
+                        <Grid Height="48" Width="567">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="92*"/>
+                                <ColumnDefinition Width="475*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="lblStationToNearCities" Content="Станция назначения:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Grid.ColumnSpan="2"/>
+                            <ComboBox x:Name="comboBoxStationTo_Копировать" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" Height="48" Margin="155,0,0,0" DropDownOpened="comboBoxStationTo_DropDownOpened" FontSize="24" Grid.Column="1"/>
+                        </Grid>
+                    </Viewbox>
+                    <Viewbox HorizontalAlignment="Left" Height="48" Stretch="Fill" VerticalAlignment="Top" Width="580" Canvas.Left="10" Canvas.Top="184">
+                        <Grid Height="48" Width="580">
+                            <Label x:Name="lblStationFrom_Копировать" Content="Станция отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
+                            <ComboBox x:Name="comboBoxStationFrom_Копировать" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" TextSearch.TextPath="Name" FontSize="24" Height="48" Margin="260,0,0,0" DropDownOpened="comboBoxStationFrom_DropDownOpened"/>
+                        </Grid>
+                    </Viewbox>
+                    <Button x:Name="btnPrint_Копировать" Content="Печать" FontSize="72" Click="btnPrint_Click" Height="113" Width="242" Canvas.Left="1642" Canvas.Top="561"/>
+                    <Viewbox HorizontalAlignment="Left" Height="50" Stretch="Fill" VerticalAlignment="Top" Width="558" Canvas.Left="32" Canvas.Top="237">
+                        <Grid Height="50" Width="559">
+                            <Label x:Name="lblFullPrice_Копировать1" Content="Время отправления:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
+                            <ComboBox x:Name="comboBoxFullPrice_Копировать1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" FontSize="24" Height="48" Margin="239,0,0,0">
+                                <ComboBoxItem Content="Школьники и воспитанники общеобразовательных учреждений от 10 лет и старше"/>
+                                <ComboBoxItem Content="Дети"/>
+                                <ComboBoxItem Content="Герои Советского Союза"/>
+                                <ComboBoxItem Content="Герои РФ"/>
+                                <ComboBoxItem Content="Полные кавалеры ордена Славы"/>
+                                <ComboBoxItem Content="Герои Социалистического Труда"/>
+                                <ComboBoxItem Content="Лица, награжденные орденом Трудовой Славы трех степеней"/>
+                                <ComboBoxItem Content="Лица, награжденные орденами «За службу Родине в Вооруженных силах СССР» трех степеней"/>
+                                <ComboBoxItem Content="Сенаторы Российской Федерации , депутаты Государственной Думы Федерального собрания Российской Федерации, лицо, сопровождающее с енатора Российской Федерации – инвалида I группы, депутата Государственной Думы – инвалида I группы"/>
+                                <ComboBoxItem Content="Помощник сенатора Российской Федерации, депутата Государственной Думы"/>
+                                <ComboBoxItem Content="Инвалиды войны"/>
+                                <ComboBoxItem Content="Участники Великой Отечественной войны"/>
+                                <ComboBoxItem Content="Ветераны боевых действий"/>
+                                <ComboBoxItem Content="Военнослужащие, проходившие военную службу в воинских частях, учреждениях, военно-учебных заведениях, не входивших в состав действующей армии, в период с 22 июня 1941 года по 3 сентября 1945 года не менее шести месяцев; военнослужащие, награжденным орденами или медалями СССР за службу в указанный период"/>
+                                <ComboBoxItem Content="Лица, награжденные знаком «Жителю блокадного Ленинграда»"/>
+                                <ComboBoxItem Content="Лица, работавшие в период Великой Отечественной войны на объектах противовоздушной обороны, местной противовоздушной обороны, на строительстве оборонительных сооружений, военно-морских баз, аэродромов и других военных объектов в пределах тыловых границ действующих фронтов, операционных зон действующих флотов, на прифронтовых участках железных и автомобильных дорог, а также члены экипажей судов транспортного флота, интернированных в начале Великой Отечественной войны в портах других государств"/>
+                                <ComboBoxItem Content="Члены семей погибших (умерших) инвалидов войны, участников Великой Отечественной войны и ветеранов боевых действий, члены семей погибших в Великой Отечественной войне лиц из личного состава групп самозащиты объектовых и аварийных команд местной противовоздушной обороны, а также члены семей погибших работников госпиталей и больниц города Ленинграда"/>
+                                <ComboBoxItem Content="Инвалиды"/>
+                                <ComboBoxItem Content="Дети-инвалиды"/>
+                                <ComboBoxItem Content="Бывшие несовершеннолетние узники фашизма"/>
+                                <ComboBoxItem Content="Лица, сопровождающие в поездках инвалидов I группы (ограничение к трудовой деятельности III степени) всех категорий и детей-инвалидов"/>
+                                <ComboBoxItem Content="Граждане, подвергшиеся радиации вследствие катастрофы на Чернобыльской АЭС, и лица, приравненные к ним"/>
+                            </ComboBox>
+                        </Grid>
+                    </Viewbox>
+                    <Grid Height="48" Width="420" HorizontalAlignment="Left" Canvas.Left="170" Canvas.Top="78" VerticalAlignment="Top">
+                        <Label x:Name="lblFullPrice_Копировать" Content="Льготы:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
+                        <ComboBox x:Name="comboBoxFullPrice_Копировать" HorizontalAlignment="Left" VerticalAlignment="Center" Width="320" FontSize="24" Height="48" Margin="100,0,0,0">
+                            <ComboBoxItem Content="Школьники и воспитанники общеобразовательных учреждений от 10 лет и старше"/>
+                            <ComboBoxItem Content="Дети"/>
+                            <ComboBoxItem Content="Герои Советского Союза"/>
+                            <ComboBoxItem Content="Герои РФ"/>
+                            <ComboBoxItem Content="Полные кавалеры ордена Славы"/>
+                            <ComboBoxItem Content="Герои Социалистического Труда"/>
+                            <ComboBoxItem Content="Лица, награжденные орденом Трудовой Славы трех степеней"/>
+                            <ComboBoxItem Content="Лица, награжденные орденами «За службу Родине в Вооруженных силах СССР» трех степеней"/>
+                            <ComboBoxItem Content="Сенаторы Российской Федерации , депутаты Государственной Думы Федерального собрания Российской Федерации, лицо, сопровождающее с енатора Российской Федерации – инвалида I группы, депутата Государственной Думы – инвалида I группы"/>
+                            <ComboBoxItem Content="Помощник сенатора Российской Федерации, депутата Государственной Думы"/>
+                            <ComboBoxItem Content="Инвалиды войны"/>
+                            <ComboBoxItem Content="Участники Великой Отечественной войны"/>
+                            <ComboBoxItem Content="Ветераны боевых действий"/>
+                            <ComboBoxItem Content="Военнослужащие, проходившие военную службу в воинских частях, учреждениях, военно-учебных заведениях, не входивших в состав действующей армии, в период с 22 июня 1941 года по 3 сентября 1945 года не менее шести месяцев; военнослужащие, награжденным орденами или медалями СССР за службу в указанный период"/>
+                            <ComboBoxItem Content="Лица, награжденные знаком «Жителю блокадного Ленинграда»"/>
+                            <ComboBoxItem Content="Лица, работавшие в период Великой Отечественной войны на объектах противовоздушной обороны, местной противовоздушной обороны, на строительстве оборонительных сооружений, военно-морских баз, аэродромов и других военных объектов в пределах тыловых границ действующих фронтов, операционных зон действующих флотов, на прифронтовых участках железных и автомобильных дорог, а также члены экипажей судов транспортного флота, интернированных в начале Великой Отечественной войны в портах других государств"/>
+                            <ComboBoxItem Content="Члены семей погибших (умерших) инвалидов войны, участников Великой Отечественной войны и ветеранов боевых действий, члены семей погибших в Великой Отечественной войне лиц из личного состава групп самозащиты объектовых и аварийных команд местной противовоздушной обороны, а также члены семей погибших работников госпиталей и больниц города Ленинграда"/>
+                            <ComboBoxItem Content="Инвалиды"/>
+                            <ComboBoxItem Content="Дети-инвалиды"/>
+                            <ComboBoxItem Content="Бывшие несовершеннолетние узники фашизма"/>
+                            <ComboBoxItem Content="Лица, сопровождающие в поездках инвалидов I группы (ограничение к трудовой деятельности III степени) всех категорий и детей-инвалидов"/>
+                            <ComboBoxItem Content="Граждане, подвергшиеся радиации вследствие катастрофы на Чернобыльской АЭС, и лица, приравненные к ним"/>
+                        </ComboBox>
+                    </Grid>
+                    <Label x:Name="lblIsEditingNearCities" Content="Для вида" Canvas.Left="10" Canvas.Top="684" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
             </TabItem>
         </TabControl>
     </Grid>

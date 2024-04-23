@@ -37,7 +37,8 @@ namespace RailwayTickets
                 {         
                     MainTickets mainTickets = new MainTickets();
                     mainTickets.Show();
-                    mainTickets.cashboxId.Content = "Номер кассы:" + cashboxId;
+                    mainTickets.cashboxId.Content = "Номер кассы: " + cashboxId;
+                    mainTickets.lblCashboxIdNearcity.Content = "Номер кассы: " + cashboxId;
                     this.Close();
                 }
                 else

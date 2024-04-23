@@ -1,10 +1,8 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -15,6 +13,12 @@ namespace RailwayTickets
     {
         static string patronymicStatic = "";
         private bool isEditingMode = false;
+        private bool isEditingModeFarAway = false;
+        private bool isEditingModeNearCities = false;
+        private bool isSelectedFarAway = true;
+        private bool isSelectedNearCities = false;
+
+
         DatabaseManager databaseManager = new DatabaseManager("localhost", 5432, "trains", "postgres", "2514");
 
         public MainTickets()
@@ -136,7 +140,7 @@ namespace RailwayTickets
             try
             {
                 databaseManager.OpenConnection();
-                NpgsqlCommand commandToAddEmployee = new NpgsqlCommand(@"INSERT INTO public.passenger (
+                NpgsqlCommand commandToAddPassenger = new NpgsqlCommand(@"INSERT INTO public.passenger (
                                                                         passenger_id, 
                                                                         passenger_passport, 
                                                                         passenger_first_name, 
@@ -180,7 +184,7 @@ namespace RailwayTickets
                 string firstName = txtBoxName.Text;
                 string lastName = txtBoxLastName.Text;
                 string patronymic = txtBoxPatronymic.Text;
-                string stationIdFrom = comboBoxStationFrom.SelectedItem.ToString();
+                //string stationIdFrom = comboBoxStationFrom.SelectedItem.ToString();
 
                 if (string.IsNullOrEmpty(passSerie))
                 {
@@ -212,17 +216,17 @@ namespace RailwayTickets
                     throw new Exception("Поле с фамилией не может быть пустым!");
                 }
 
-                commandToAddEmployee.Parameters.AddWithValue("@passport_serie", passSerie);
-                commandToAddEmployee.Parameters.AddWithValue("@passport_number", passNumber);
-                commandToAddEmployee.Parameters.AddWithValue("@passengerName", firstName);
-                commandToAddEmployee.Parameters.AddWithValue("@passengerSurname", lastName);
-                commandToAddEmployee.Parameters.AddWithValue("@passengerPatronymic", patronymic);
+                commandToAddPassenger.Parameters.AddWithValue("@passport_serie", passSerie);
+                commandToAddPassenger.Parameters.AddWithValue("@passport_number", passNumber);
+                commandToAddPassenger.Parameters.AddWithValue("@passengerName", firstName);
+                commandToAddPassenger.Parameters.AddWithValue("@passengerSurname", lastName);
+                commandToAddPassenger.Parameters.AddWithValue("@passengerPatronymic", patronymic);
 
                 if (txtBoxPassSerie.Text.Length > 0 && txtBoxPassNum.Text.Length > 0 && txtBoxName.Text.Length > 0 && txtBoxLastName.Text.Length > 0)
                 {
                     try
                     {
-                        commandToAddEmployee.ExecuteNonQuery();
+                        commandToAddPassenger.ExecuteNonQuery();
                         MessageBox.Show("Пользователь успешно добавлен!");
                     }
                     catch
@@ -313,6 +317,91 @@ namespace RailwayTickets
                 gridFarAway.Children.Add(newElement);
             }
         }
+        private void ShowAlignmentGuidesNearCities(UIElement element)
+        {
+            ClearAlignmentGuidesNearCities();
+            List<UIElement> newElements = new List<UIElement>();
+
+            double elementLeft = Canvas.GetLeft(element);
+            double elementTop = Canvas.GetTop(element);
+            double elementRight = elementLeft + element.RenderSize.Width;
+            double elementBottom = elementTop + element.RenderSize.Height;
+
+            foreach (UIElement sibling in gridNearCities.Children)
+            {
+                if (sibling != element)
+                {
+                    double siblingLeft = Canvas.GetLeft(sibling);
+                    double siblingTop = Canvas.GetTop(sibling);
+                    double siblingRight = siblingLeft + sibling.RenderSize.Width;
+                    double siblingBottom = siblingTop + sibling.RenderSize.Height;
+
+                    if (Math.Abs(elementLeft - siblingLeft) < 1)
+                    {
+                        Line verticalGuide = new Line();
+                        verticalGuide.Stroke = Brushes.Red;
+                        verticalGuide.X1 = elementLeft;
+                        verticalGuide.X2 = siblingLeft;
+                        verticalGuide.Y1 = Math.Min(elementTop, siblingTop);
+                        verticalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(verticalGuide);
+                    }
+
+                    if (Math.Abs(elementTop - siblingTop) < 1)
+                    {
+                        Line horizontalGuide = new Line();
+                        horizontalGuide.Stroke = Brushes.Red;
+                        horizontalGuide.X1 = Math.Min(elementLeft, siblingLeft);
+                        horizontalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        horizontalGuide.Y1 = elementTop;
+                        horizontalGuide.Y2 = siblingTop;
+                        newElements.Add(horizontalGuide);
+                    }
+
+                    if (Math.Abs(elementRight - siblingRight) < 1)
+                    {
+                        Line verticalGuide = new Line();
+                        verticalGuide.Stroke = Brushes.Red;
+                        verticalGuide.X1 = Math.Max(elementRight, siblingRight);
+                        verticalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        verticalGuide.Y1 = Math.Min(elementTop, siblingTop);
+                        verticalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(verticalGuide);
+                    }
+
+                    if (Math.Abs(elementBottom - siblingBottom) < 1)
+                    {
+                        Line horizontalGuide = new Line();
+                        horizontalGuide.Stroke = Brushes.Red;
+                        horizontalGuide.X1 = Math.Min(elementLeft, siblingLeft);
+                        horizontalGuide.X2 = Math.Max(elementRight, siblingRight);
+                        horizontalGuide.Y1 = Math.Max(elementBottom, siblingBottom);
+                        horizontalGuide.Y2 = Math.Max(elementBottom, siblingBottom);
+                        newElements.Add(horizontalGuide);
+                    }
+                }
+            }
+            foreach (UIElement newElement in newElements)
+            {
+                gridNearCities.Children.Add(newElement);
+            }
+        }
+        private void ClearAlignmentGuidesNearCities()
+        {
+            List<UIElement> guidesToRemove = new List<UIElement>();
+            foreach (UIElement child in gridNearCities.Children)
+            {
+                if (child is Line)
+                {
+                    guidesToRemove.Add(child);
+                }
+            }
+
+            foreach (UIElement guide in guidesToRemove)
+            {
+                gridNearCities.Children.Remove(guide);
+            }
+        }
 
         private void ClearAlignmentGuides()
         {
@@ -334,72 +423,129 @@ namespace RailwayTickets
         private void menuItemEdit_Click(object sender, RoutedEventArgs e)
         {
             isEditingMode = !isEditingMode;
-            if (isEditingMode)
+            if (isSelectedFarAway)
             {
-                lblIsEditMode.Content = "Включен режим редактирования!";
-                foreach (UIElement element in gridFarAway.Children)
+                if (isEditingMode)
                 {
-                    if (element is TextBox)
+                    lblIsEditMode.Content = "Включен режим редактирования!";
+                    foreach (UIElement element in gridFarAway.Children)
                     {
-                        ((TextBox)element).IsReadOnly = true;
-                        ((TextBox)element).Cursor = Cursors.Hand;
-                        EnableTextBoxDragging((TextBox)element);
+                        if (element is TextBox)
+                        {
+                            ((TextBox)element).IsReadOnly = true;
+                            ((TextBox)element).Cursor = Cursors.Hand;
+                            EnableTextBoxDragging((TextBox)element);
+                        }
+                        if (element is CheckBox)
+                        {
+                            EnableCheckBoxDragging((CheckBox)element);
+                        }
+                        if (element is Button)
+                        {
+                            EnableButtonDragging((Button)element);
+                        }
+                        if (element is Viewbox)
+                        {
+                            ((Viewbox)element).Cursor = Cursors.Hand;
+                        }
+
+                        element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
+                        element.MouseMove += Element_MouseMove;
+                        element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
                     }
-                    if (element is ComboBox)
+                }
+                else
+                {
+                    ClearAlignmentGuides();
+                    lblIsEditMode.Content = "";
+                    foreach (UIElement element in gridFarAway.Children)
                     {
-                        EnableComboBoxDragging((ComboBox)element);
+                        if (element is TextBox)
+                        {
+                            ((TextBox)element).IsReadOnly = false;
+                            ((TextBox)element).Cursor = Cursors.IBeam;
+                            DisableTextBoxDragging((TextBox)element);
+                        }
+                        if (element is CheckBox)
+                        {
+                            DisableCheckBoxDragging((CheckBox)element);
+                        }
+                        if (element is Button)
+                        {
+                            DisableButtonDragging((Button)element);
+                        }
+                        if (element is Viewbox)
+                        {
+                            ((Viewbox)element).Cursor = Cursors.Arrow;
+                        }
+                        element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
+                        element.MouseMove -= Element_MouseMove;
+                        element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
                     }
-                    if (element is CheckBox)
-                    {
-                        EnableCheckBoxDragging((CheckBox)element);
-                    }
-                    if (element is Button)
-                    {
-                        EnableButtonDragging((Button)element);
-                    }
-                    if (element is Viewbox)
-                    {
-                        ((Viewbox)element).Cursor = Cursors.Hand;
-                    }
-                    
-                    element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
-                    element.MouseMove += Element_MouseMove;
-                    element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
                 }
             }
-            else
+            else if (isSelectedNearCities)
             {
-                ClearAlignmentGuides();
-                lblIsEditMode.Content = "";
-                foreach (UIElement element in gridFarAway.Children)
+                if (isEditingMode)
                 {
-                    if (element is TextBox)
+                    lblIsEditingNearCities.Content = "Включен режим редактирования!";
+                    foreach (UIElement element in gridNearCities.Children)
                     {
-                        ((TextBox)element).IsReadOnly = false;
-                        ((TextBox)element).Cursor = Cursors.IBeam;
-                        DisableTextBoxDragging((TextBox)element);
+                        if (element is TextBox)
+                        {
+                            ((TextBox)element).IsReadOnly = true;
+                            ((TextBox)element).Cursor = Cursors.Hand;
+                            EnableTextBoxDragging((TextBox)element);
+                        }
+                        if (element is CheckBox)
+                        {
+                            EnableCheckBoxDragging((CheckBox)element);
+                        }
+                        if (element is Button)
+                        {
+                            EnableButtonDragging((Button)element);
+                        }
+                        if (element is Viewbox)
+                        {
+                            ((Viewbox)element).Cursor = Cursors.Hand;
+                        }
+
+                        element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
+                        element.MouseMove += Element_MouseMove;
+                        element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
                     }
-                    if (element is ComboBox)
+                }
+                else
+                {
+                    ClearAlignmentGuidesNearCities();
+                    lblIsEditingNearCities.Content = "";
+                    foreach (UIElement element in gridNearCities.Children)
                     {
-                        DisableComboBoxDragging((ComboBox)element);
+                        if (element is TextBox)
+                        {
+                            ((TextBox)element).IsReadOnly = false;
+                            ((TextBox)element).Cursor = Cursors.IBeam;
+                            DisableTextBoxDragging((TextBox)element);
+                        }
+                        if (element is CheckBox)
+                        {
+                            DisableCheckBoxDragging((CheckBox)element);
+                        }
+                        if (element is Button)
+                        {
+                            DisableButtonDragging((Button)element);
+                        }
+                        if (element is Viewbox)
+                        {
+                            ((Viewbox)element).Cursor = Cursors.Arrow;
+                        }
+                        element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
+                        element.MouseMove -= Element_MouseMove;
+                        element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
                     }
-                    if (element is CheckBox)
-                    {
-                        DisableCheckBoxDragging((CheckBox)element);
-                    }
-                    if (element is Button)
-                    {
-                        DisableButtonDragging((Button)element);
-                    }
-                    if (element is Viewbox)
-                    {
-                        ((Viewbox)element).Cursor = Cursors.Arrow;
-                    }
-                    element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
-                    element.MouseMove -= Element_MouseMove;
-                    element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
                 }
             }
+            
         }
 
         private void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -414,7 +560,7 @@ namespace RailwayTickets
 
         private void Element_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isEditingMode && isDragging)
+            if (isEditingMode && isDragging && isSelectedFarAway)
             {
                 Point newPoint = e.GetPosition(gridFarAway);
                 UIElement element = sender as UIElement;
@@ -428,6 +574,21 @@ namespace RailwayTickets
                 startPoint = newPoint;
 
                 ShowAlignmentGuides(element);
+            }
+            if(isEditingMode && isDragging && isSelectedNearCities)
+            {
+                Point newPoint = e.GetPosition(gridNearCities);
+                UIElement element = sender as UIElement;
+
+                double left = newPoint.X - startPoint.X + (double)element.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)element.GetValue(Canvas.TopProperty);
+
+                element.SetValue(Canvas.LeftProperty, left);
+                element.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+
+                ShowAlignmentGuidesNearCities(element);
             }
         }
 
@@ -493,61 +654,6 @@ namespace RailwayTickets
                 selectedTextBox = null;
             }
         }
-
-        private void EnableComboBoxDragging(ComboBox comboBox)
-        {
-            comboBox.Cursor = Cursors.Hand;
-            comboBox.PreviewMouseLeftButtonDown += ComboBox_MouseLeftButtonDown;
-            comboBox.PreviewMouseMove += ComboBox_MouseMove;
-            comboBox.PreviewMouseLeftButtonUp += ComboBox_MouseLeftButtonUp;
-        }
-
-        private void DisableComboBoxDragging(ComboBox comboBox)
-        {
-            comboBox.Cursor = Cursors.Arrow;
-            comboBox.PreviewMouseLeftButtonDown -= ComboBox_MouseLeftButtonDown;
-            comboBox.PreviewMouseMove -= ComboBox_MouseMove;
-            comboBox.PreviewMouseLeftButtonUp -= ComboBox_MouseLeftButtonUp;
-        }
-        private ComboBox selectedComboBox;
-
-        private void ComboBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (isEditingMode)
-            {
-                isDragging = true;
-                startPoint = e.GetPosition(null);
-                selectedComboBox = sender as ComboBox;
-                selectedComboBox.CaptureMouse();
-                e.Handled = true;
-            }
-        }
-
-        private void ComboBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isEditingMode && isDragging && selectedComboBox != null)
-            {
-                Point newPoint = e.GetPosition(gridFarAway);
-                double left = newPoint.X - startPoint.X + (double)selectedComboBox.GetValue(Canvas.LeftProperty);
-                double top = newPoint.Y - startPoint.Y + (double)selectedComboBox.GetValue(Canvas.TopProperty);
-
-                selectedComboBox.SetValue(Canvas.LeftProperty, left);
-                selectedComboBox.SetValue(Canvas.TopProperty, top);
-
-                startPoint = newPoint;
-            }
-        }
-
-        private void ComboBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (isEditingMode && isDragging && selectedComboBox != null)
-            {
-                isDragging = false;
-                selectedComboBox.ReleaseMouseCapture();
-                selectedComboBox = null;
-            }
-        }
-
         private void EnableCheckBoxDragging(CheckBox checkBox)
         {
             checkBox.Cursor = Cursors.Hand;
@@ -633,9 +739,20 @@ namespace RailwayTickets
 
         private void Button_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isEditingMode && isDragging && selectedButton != null)
+            if (isEditingMode && isDragging && selectedButton != null && isSelectedFarAway)
             {
                 Point newPoint = e.GetPosition(gridFarAway);
+                double left = newPoint.X - startPoint.X + (double)selectedButton.GetValue(Canvas.LeftProperty);
+                double top = newPoint.Y - startPoint.Y + (double)selectedButton.GetValue(Canvas.TopProperty);
+
+                selectedButton.SetValue(Canvas.LeftProperty, left);
+                selectedButton.SetValue(Canvas.TopProperty, top);
+
+                startPoint = newPoint;
+            }
+            if (isEditingMode && isDragging && selectedButton != null && isSelectedNearCities)
+            {
+                Point newPoint = e.GetPosition(gridNearCities);
                 double left = newPoint.X - startPoint.X + (double)selectedButton.GetValue(Canvas.LeftProperty);
                 double top = newPoint.Y - startPoint.Y + (double)selectedButton.GetValue(Canvas.TopProperty);
 
@@ -655,7 +772,29 @@ namespace RailwayTickets
                 selectedButton = null;
             }
         }
-
-        
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl tabControl = sender as TabControl;
+            if (tabControl != null && tabControl.SelectedItem == tabItemNearCities)
+            {
+                isSelectedNearCities = true;
+                isSelectedFarAway = false;
+                lblIsEditMode.Content = "";
+                lblIsEditingNearCities.Content = "";
+                isEditingMode = false;
+                isEditingModeFarAway = false;
+                isEditingModeNearCities = false;
+            }
+            if(tabControl != null && tabControl.SelectedItem == tabItemFarAway)
+            {
+                isSelectedNearCities = false;
+                isSelectedFarAway = true;
+                lblIsEditMode.Content = "";
+                lblIsEditingNearCities.Content = "";
+                isEditingMode= false;
+                isEditingModeFarAway = false;
+                isEditingModeNearCities = false;
+            }
+        }
     }
 }
